@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App'
 import router from './router'
+import antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.min.css';
 import store from './store'
 
-Vue.config.productionTip = false
+const app  = createApp(App as any);
+app.use(router.$router);
+router.$router.isReady().then(() => {
+    app.use(antd as any).use(store).mount('#app')
+})
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
