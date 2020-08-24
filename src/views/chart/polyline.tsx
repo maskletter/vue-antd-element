@@ -2,7 +2,6 @@ import { defineComponent } from 'vue';
 import { Card, Row, Col, Button } from 'ant-design-vue'
 import Page from '../../components/admin/page'
 import Chart from '../../components/chart'
-import { Chart as _Chart } from '@antv/f2';
 import { CropperOpen } from '@/components/cropper'
 import Br from '@/components/br';
 

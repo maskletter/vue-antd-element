@@ -315,8 +315,10 @@ export default defineComponent(() => {
                     <Br />
                     <Button type='primary'>保存</Button>
                 </Card>
+                
             </Col>
         </Row>
+        <Br />
         <Card>
             <List data={data} render={(v, index) => <ListItem key={index} content={{
                 avatar: <img style={{width: '50px'}} src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />,

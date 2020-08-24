@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
 import Home from '../views/Home.vue'
-import { HomeFilled, SmileOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined } from '@ant-design/icons-vue'
+import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined } from '@ant-design/icons-vue'
 import { reactive, createVNode } from 'vue'
 import RouterView from '../components/routerview';
 
@@ -26,6 +26,30 @@ const router = new class SystemRouter {
       meta: { title: '拖拽', icon: SmileOutlined },
       name: 'dragula',
       component: () => import('../views/dragula')
+    },
+    {
+      path: '/rich-text',
+      meta: { title: '富文本', icon: SolutionOutlined },
+      name: 'rich-text',
+      component: createVNode(RouterView, {
+        keep: true
+      }),
+      children: [
+        {
+          path: 'ckeditor',
+          meta: { title: 'ckeditor', icon: ReconciliationOutlined },
+          component: () => import('../views/rich-text/ckeditor')
+        },
+        {
+          path: 'md',
+          meta: { title: 'md', icon: ReadOutlined },
+          component: () => import('../views/rich-text/md')
+        },
+        {
+          path: '',
+          redirect: './polyline'
+        }
+      ]
     },
     {
       path: '/chart',
