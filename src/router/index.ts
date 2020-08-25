@@ -126,7 +126,12 @@ const router = new class SystemRouter {
       name: 'test',
       hidden: true,
       component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
+    },
+    // {
+    //   path: '/*',
+    //   hidden: true,
+    //   component: createVNode('h1', {}, ['aaaaaa'])
+    // }
   ]
 
   init() {
@@ -136,8 +141,12 @@ const router = new class SystemRouter {
       routes: this.defaultRouter
     })
     this.$router.beforeEach((to, form, next) => {
-      console.log(to.path)
-      next();
+      if(to.matched.length == 0) {
+        next('/');
+      } else {
+        next();
+      }
+      
     })
   }
 
