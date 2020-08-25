@@ -1,5 +1,5 @@
 
-import { defineComponent, VNode, watch, reactive, provide, ref } from 'vue'
+import { defineComponent, VNode, KeepAlive, watch, reactive, provide, ref } from 'vue'
 import { createStyle, makeStyles } from '../theme'
 import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router'
 import { useRoute }  from 'vue-router'
@@ -68,7 +68,7 @@ const App = defineComponent((props: AppInterface, content) => {
     const router = useRouter();
     const route = useRoute();
     const activeUrl = ref(location.pathname+location.search);
-    const tabs: { url: string, child: VNode, title: string, route: RouteLocationNormalizedLoaded }[] = reactive([]);
+    const tabs: { url: string, child: VNode, title: string }[] = reactive([]);
     
     /**渲染页面标题 */
     const renderTitle = (titleType: AppInterface['titleType']) => {
@@ -83,15 +83,14 @@ const App = defineComponent((props: AppInterface, content) => {
    
     provide('app-drawer-collapsed', ref(false));
     
-    watch(route, (val: RouteLocationNormalizedLoaded) => {
+    watch((() => [route.path] as any), (val: RouteLocationNormalizedLoaded) => {
         const url: string = location.pathname+location.search;
         activeUrl.value = url;
         if(tabs.find(v => v.url == url) == null) {
             tabs.push({
                 url,
-                title: val.meta.title,
-                route: val,
-                child: props.tabs ? props.tabs(val) : <text>{val.meta.title}</text>
+                title: route.meta.title,
+                child: props.tabs ? props.tabs(route) : <text>{route.meta.title}</text>
             })
         } else {
             console.log('已存在')
