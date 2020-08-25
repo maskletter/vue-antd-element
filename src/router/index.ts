@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
-import Home from '../views/Home.vue'
-import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined } from '@ant-design/icons-vue'
+import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined } from '@ant-design/icons-vue'
 import { reactive, createVNode } from 'vue'
 import RouterView from '../components/routerview';
+import Login from '../views/login'
 
 const router = new class SystemRouter {
 
@@ -16,16 +16,48 @@ const router = new class SystemRouter {
 
   private defaultRouter: Array<RouteRecordRaw&{hidden?:boolean}> = [
     {
+      path: '/login',
+      name: 'login',
+      meta: { title: '登录', icon: HomeFilled },
+      hidden: true,
+      component: Login
+    },
+    {
       path: '/',
       name: 'Home',
       meta: { title: '首页', icon: HomeFilled },
       component: () => import('../views/home')
     },
     {
-      path: '/dragula',
-      meta: { title: '拖拽', icon: SmileOutlined },
-      name: 'dragula',
-      component: () => import('../views/dragula')
+      path: '/components',
+      meta: { title: '常用组件', icon: SolutionOutlined },
+      name: 'components',
+      component: createVNode(RouterView, {
+        keep: true
+      }),
+      children: [
+        {
+          path: 'copy',
+          meta: { title: 'copy', icon: ReconciliationOutlined },
+          component: () => import('../views/components/copy')
+        },
+        {
+          path: 'dragula',
+          meta: { title: '拖拽', icon: NodeExpandOutlined },
+          name: 'dragula',
+          component: () => import('../views/components/dragula')
+        },
+        {
+          path: 'crop',
+          meta: { title: '图片裁剪', icon: PictureOutlined },
+          name: 'crop',
+          component: () => import('../views/components/crop')
+        },
+        {
+          path: '',
+          redirect: './copy'
+        }
+      ]
     },
     {
       path: '/rich-text',

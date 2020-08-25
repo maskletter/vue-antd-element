@@ -37,6 +37,34 @@ declare module 'ant-design-vue/types/list/list-item' {
         $props: {  [index in keyof ListItem]?: ListItem[index]; };
     }
 }
+declare module 'ant-design-vue/types/input/input-group' {
+    interface InputGroup {
+        $props: {  [index in keyof InputGroup]?: InputGroup[index]; } & {
+            placeholder?: string
+        };
+    }
+}
+declare module 'ant-design-vue/types/input/input-search' {
+    interface InputSearch {
+        $props: {  [index in keyof InputSearch]?: InputSearch[index]; } & {
+            placeholder?: string
+        };
+    }
+}
+declare module 'ant-design-vue/types/input/password' {
+    interface Password {
+        $props: {  [index in keyof Password]?: Password[index]; } & {
+            placeholder?: string
+        };
+    }
+}
+declare module 'ant-design-vue/types/input/textArea' {
+    interface TextArea {
+        $props: {  [index in keyof TextArea]?: TextArea[index]; } & {
+            placeholder?: string
+        };
+    }
+}
 
 declare module 'ant-design-vue/types/tabs/tab-pane' {
     interface TabPane {
@@ -115,7 +143,9 @@ declare module 'ant-design-vue' {
         $props: {  [index in keyof Timeline]?: Timeline[index]; };
     }
     declare class Input {
-        $props: {  [index in keyof Input]?: Input[index]; };
+        $props: {  [index in keyof Input]?: Input[index]; } & {
+            placeholder?: string
+        };
     }
     declare class List {
         $props: {  [index in keyof List]?: List[index]; } & {

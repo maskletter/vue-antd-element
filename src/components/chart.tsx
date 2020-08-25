@@ -34,6 +34,10 @@ const Chart = defineComponent((props: ChartProps) => {
             // devicePixelRatio: 4
         })
         renderEchart();
+        
+    })
+
+    onActivated(() => {
         window.addEventListener('resize', watchResize)
     })
 

@@ -1,4 +1,4 @@
-import { defineComponent, VNode, KeepAlive, createVNode } from 'vue'
+import { defineComponent, VNode, KeepAlive, createVNode, ref } from 'vue'
 import App from './components/admin/app'
 import { ThemeProvide, makeStyles, createStyle } from './components/theme'
 import Title from './components/admin/title'
@@ -8,6 +8,7 @@ import { RouteLocationNormalizedLoaded } from 'vue-router'
 import RouterView from './components/routerview'
 import { SettingFilled, UserAddOutlined, WarningOutlined } from '@ant-design/icons-vue'
 import { Dropdown, Menu, Avatar, Popover, Empty, Modal } from 'ant-design-vue'
+import Login from './views/login'
 
 
 
@@ -36,6 +37,7 @@ const useStyle = makeStyles(() => createStyle({
 export default defineComponent((props, content) => {
 
     const styles = useStyle('app-style');
+    const isLogin = ref(false);
 
     const logout = () => {
         Modal.confirm({
@@ -89,14 +91,15 @@ export default defineComponent((props, content) => {
     }
  
     return () => <ThemeProvide styles={style}>
-        <App 
+        { isLogin.value == false ? <Login></Login> : <App 
             titleType='full'
             title={title}
             drawer={<Drawer />}
             tabs={tabs}
             color='#f6f6f6' >
                 <RouterView keep={true} />
-        </App>
+        </App> }
+        
     </ThemeProvide>
 
 

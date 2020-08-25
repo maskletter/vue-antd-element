@@ -23,6 +23,10 @@ const useStyle = makeStyles(() => createStyle({
         },
         '.ant-tabs-bar.ant-tabs-top-bar': {
             marginBottom: '0px'
+        },
+        '.ant-tabs .ant-tabs-small-bar .ant-tabs-tab': {
+            paddingLeft: 8,
+            paddingRight: 21
         }
     },
     root: {

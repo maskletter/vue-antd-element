@@ -1,6 +1,8 @@
-import { defineComponent, ref, ComponentInternalInstance, VNode, onMounted } from 'vue';
+import { defineComponent, getCurrentInstance, KeepAlive, ref, ComponentInternalInstance, VNode, onUnmounted, onMounted, onActivated, inject } from 'vue';
 import { BackTop } from 'ant-design-vue'
+import { onBeforeRouteLeave } from 'vue-router'
 const GeminiScrollbar = require('gemini-scrollbar')
+import 'gemini-scrollbar/gemini-scrollbar.css'
 
 
 interface PageInterface {
@@ -9,20 +11,44 @@ interface PageInterface {
 }
 
 const Page = defineComponent((props: PageInterface, content) => {
-    
+    const scrollTop = ref(0);
     const $el: any = ref<Element | ComponentInternalInstance | null>(null);
     const $scroll = ref();
-
+    let myScrollbar: any;
     onMounted(() => {
-        var myScrollbar = new GeminiScrollbar({
+        
+        myScrollbar = new GeminiScrollbar({
             element: $scroll.value
         }).create();
+        $el.value = myScrollbar._viewElement;
     })
 
-    return () => <div ref={$el} style={{padding: '10px 20px', position: 'relative', background: props.color, boxSizing: 'border-box', height: '100%', overflow: 'auto'}}>
+    onActivated(() => {
+        // console.log(getCurrentInstance())
+    })
+
+
+    onActivated(() => {
+        scrollTop.value && (myScrollbar._viewElement.scrollTop = scrollTop.value);
+    })
+
+    onBeforeRouteLeave((to, from, next) => {
+        scrollTop.value = $el.value.scrollTop;
+        next();
+    })
+
+    onUnmounted(() => {
+        myScrollbar.destroy();
+    })
+
+
+    return () => <div style={{ position: 'relative', background: props.color, height: '100%', overflow: 'auto'}}>
         <div ref={$scroll}>
-            { props.title && <div style={{fontSize: '30px', marginBottom: '20px', letterSpacing: '2px'}}>{props.title}</div> }
-            { content.slots.default && content.slots.default() }
+            <div style={{ padding: '10px 20px', boxSizing: 'border-box' }}>
+                { props.title && <div style={{fontSize: '30px', marginBottom: '20px', letterSpacing: '2px'}}>{props.title}</div> }
+                { content.slots.default && content.slots.default() }
+            </div>
+            
         </div>
         
         <BackTop target={() => $el.value} />
@@ -38,4 +64,5 @@ Page.props = {
         type: [String, String]
     }
 }
+
 export default Page;

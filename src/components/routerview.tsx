@@ -9,7 +9,7 @@ const RouterView = defineComponent((props: RouterProps) => {
 
     const slots = {
         default: (component: any) => {
-            return props.keep ? <KeepAlive>
+            return props.keep ? <KeepAlive >
                 { component.Component }
             </KeepAlive> : component.Component;
         },

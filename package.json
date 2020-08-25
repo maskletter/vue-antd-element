@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^5.1.1",
     "ant-design-vue": "^2.0.0-beta.2",
+    "clipboard": "^2.0.6",
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.7",
     "dragula": "^3.7.2",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/ckeditor": "^4.9.10",
+    "@types/clipboard": "^2.0.1",
     "@types/dragula": "^3.7.0",
     "@types/echarts": "^4.6.4",
     "@types/simplemde": "^1.11.7",

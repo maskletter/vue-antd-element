@@ -8,6 +8,7 @@ import Chart from '@/components/chart';
 import Img1 from '@/assets/img1.png';
 import Img2 from '@/assets/img2.jpg';
 import List, { ListItem } from '@/components/list';
+import Copy from '@/components/copy';
 
 const useStyle = makeStyles(() => createStyle({
     number: {

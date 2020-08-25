@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, watch, onDeactivated, onActivated } from "vue"
+import { defineComponent, ref, onMounted, watch, onDeactivated, onActivated, onUnmounted } from "vue"
 // import CKEDITOR from 'CKEDITOR'
 
 
@@ -46,6 +46,9 @@ const Ckeditor = defineComponent((props: { height?: number, value?: string }, co
     })
 
     onDeactivated(() => {
+        /**
+         * ckeditor在keep-alive下回导致异常，因此需要手动销毁
+         */
         ckeditor.destroy();
     })
 
