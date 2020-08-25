@@ -4,7 +4,7 @@ import { ThemeProvide, makeStyles, createStyle } from './components/theme'
 import Title from './components/admin/title'
 import Drawer from './components/admin/drawer'
 import Breadcrumb from './components/admin/breadcrumb'
-import { RouteLocationNormalizedLoaded } from 'vue-router'
+import { RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router'
 import RouterView from './components/routerview'
 import { SettingFilled, UserAddOutlined, WarningOutlined } from '@ant-design/icons-vue'
 import { Dropdown, Menu, Avatar, Popover, Empty, Modal, Spin } from 'ant-design-vue'
@@ -38,10 +38,14 @@ export default defineComponent((props, content) => {
 
     const styles = useStyle('app-style');
     const isLogin = ref(false);
+    const router = useRouter();
+    // const route = useRoute();
+    // console.log(route)
     const loadingLoginInfo = ref(false);
     const systemProvide: SystemProvide = {
         login: () => {
             sessionStorage.setItem('user', 'mock-login')
+            router.replace('/');
             isLogin.value = true;
         },
         logout: () => {
