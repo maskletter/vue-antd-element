@@ -1,6 +1,7 @@
 
 
 module.exports = {
+    publicPath: '/dist/',
     devServer: {
         overlay: {
             warnings: false,
