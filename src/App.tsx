@@ -1,4 +1,4 @@
-import { defineComponent, VNode, KeepAlive, createVNode, ref } from 'vue'
+import { defineComponent, VNode, KeepAlive, createVNode, ref, provide } from 'vue'
 import App from './components/admin/app'
 import { ThemeProvide, makeStyles, createStyle } from './components/theme'
 import Title from './components/admin/title'
@@ -7,7 +7,7 @@ import Breadcrumb from './components/admin/breadcrumb'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 import RouterView from './components/routerview'
 import { SettingFilled, UserAddOutlined, WarningOutlined } from '@ant-design/icons-vue'
-import { Dropdown, Menu, Avatar, Popover, Empty, Modal } from 'ant-design-vue'
+import { Dropdown, Menu, Avatar, Popover, Empty, Modal, Spin } from 'ant-design-vue'
 import Login from './views/login'
 
 
@@ -38,6 +38,30 @@ export default defineComponent((props, content) => {
 
     const styles = useStyle('app-style');
     const isLogin = ref(false);
+    const loadingLoginInfo = ref(false);
+    const systemProvide: SystemProvide = {
+        login: () => {
+            sessionStorage.setItem('user', 'mock-login')
+            isLogin.value = true;
+        },
+        logout: () => {
+            sessionStorage.removeItem('user')
+            isLogin.value = false;
+        }
+    }
+    provide('system', systemProvide)
+
+    //模拟获取登录信息
+    if(sessionStorage.getItem('user')) {
+        //实际上这里需要接口请求获取登录信息
+        setTimeout(() => {
+            loadingLoginInfo.value = true;
+            isLogin.value = true;
+        },1000)
+    } else {
+        loadingLoginInfo.value = true;
+    }
+    
 
     const logout = () => {
         Modal.confirm({
@@ -50,7 +74,10 @@ export default defineComponent((props, content) => {
             cancelText: '取消',
             onOk:() => {
                 return new Promise((resolve, reject) => {
-                    setTimeout(resolve, 1000);
+                    setTimeout(() => {
+                        resolve();
+                        systemProvide.logout();
+                    }, 1000);
                 }).catch(() => console.log('Oops errors!'));
             }
         })
@@ -89,9 +116,14 @@ export default defineComponent((props, content) => {
             {route.meta.title}
         </text>
     }
+
+    const loginLoading =  <div style={{height:'100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Spin size='large' tip='获取登录信息中'></Spin>
+    </div>;
  
     return () => <ThemeProvide styles={style}>
-        { isLogin.value == false ? <Login></Login> : <App 
+        
+        { loadingLoginInfo.value == false ? loginLoading : isLogin.value == false ? <Login></Login> : <App 
             titleType='full'
             title={title}
             drawer={<Drawer />}
@@ -99,6 +131,7 @@ export default defineComponent((props, content) => {
             color='#f6f6f6' >
                 <RouterView keep={true} />
         </App> }
+
         
     </ThemeProvide>
 
