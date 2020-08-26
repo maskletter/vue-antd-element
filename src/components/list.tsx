@@ -13,9 +13,9 @@ const List = defineComponent((props: { data: any[], render: (data: any, index: n
 })
 
 const ListItem = defineComponent((props: { content?: {
-    title?: VNode|string,
-    avatar?: VNode,
-    description?: VNode|string
+    title?: () => VNode|string,
+    avatar?: () => VNode,
+    description?: () => VNode|string
 }, key?: any }, content) => {
     
     return () => <_List.Item key={props.key}>

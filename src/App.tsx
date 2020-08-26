@@ -9,6 +9,7 @@ import RouterView from './components/routerview'
 import { SettingFilled, UserAddOutlined, WarningOutlined } from '@ant-design/icons-vue'
 import { Dropdown, Menu, Avatar, Popover, Empty, Modal, Spin } from 'ant-design-vue'
 import Login from './views/login'
+import { KeepAliveList } from './components/routerview'
 
 
 
@@ -39,10 +40,16 @@ export default defineComponent((props, content) => {
     const styles = useStyle('app-style');
     const isLogin = ref(false);
     const router = useRouter();
-    // const route = useRoute();
-    // console.log(route)
+   
     const loadingLoginInfo = ref(false);
+    
+    const keepMaps = ref<string[]>([]);
+    /**
+     * 用来处理程序中的公共及方法，
+     * 类似于vuex
+     */
     const systemProvide: SystemProvide = {
+        keepalive: keepMaps,
         login: () => {
             sessionStorage.setItem('user', 'mock-login')
             router.replace('/');
@@ -51,6 +58,16 @@ export default defineComponent((props, content) => {
         logout: () => {
             sessionStorage.removeItem('user')
             isLogin.value = false;
+        },
+        setKeep: (name: string) => {
+            if(keepMaps.value.indexOf(name) == -1) {
+                keepMaps.value.push(name);
+            }
+        },
+        clearKeep: (name: string) => {
+            const index = keepMaps.value.indexOf(name);
+            if(index == -1) return;
+            keepMaps.value.splice(index,1);
         }
     }
     provide('system', systemProvide)
@@ -102,7 +119,7 @@ export default defineComponent((props, content) => {
             <span onClick={logout}>退出</span>
              
             <Dropdown trigger={['click']} v-slots={{
-                overlay: <Menu>
+                overlay: () => <Menu>
                     <Menu.Item>1st menu item</Menu.Item>
                     <Menu.Item>2st menu item</Menu.Item>
                     <Menu.Item>3st menu item</Menu.Item>

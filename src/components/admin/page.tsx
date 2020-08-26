@@ -15,6 +15,12 @@ const Page = defineComponent((props: PageInterface, content) => {
     const $el: any = ref<Element | ComponentInternalInstance | null>(null);
     const $scroll = ref();
     let myScrollbar: any;
+
+    // onBeforeRouteLeave((to, from, next) => {
+    //     scrollTop.value = $el.value.scrollTop;
+    //     next();
+    // })
+
     onMounted(() => {
         
         myScrollbar = new GeminiScrollbar({
@@ -30,11 +36,6 @@ const Page = defineComponent((props: PageInterface, content) => {
 
     onActivated(() => {
         scrollTop.value && (myScrollbar._viewElement.scrollTop = scrollTop.value);
-    })
-
-    onBeforeRouteLeave((to, from, next) => {
-        scrollTop.value = $el.value.scrollTop;
-        next();
     })
 
     onUnmounted(() => {

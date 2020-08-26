@@ -69,7 +69,6 @@ const useStyle = (sty: any, key: string) => {
 
     const theme: any = inject('theme-color')
     // const _sty = reactive(sty)
-    console.log(21312)
     if(!maps.get(key)) {
       let classes
       if(theme) {
@@ -78,7 +77,6 @@ const useStyle = (sty: any, key: string) => {
             const jssResult = jss.createStyleSheet(result, {
               
             }).attach();
-            console.log('----------')
             // jssResult.update
             classes = jssResult.classes
         }, { immediate: true })
@@ -115,9 +113,9 @@ function createStyle<ClassKey extends string, Props extends {}>(styles: StyleRul
 
 const ThemeProvide = defineComponent((props: { styles?: BaseCreateCSSProperties }, content) => {
     
-    const parentStyle: any = inject('theme-color')||{};
+    // const parentStyle: any = inject('theme-color')||{};
 
-    const reactiveStyle = reactive({...parentStyle, ...props.styles})
+    const reactiveStyle = reactive((props.styles||{}) as any)
 
     provide('theme-color', reactiveStyle);
     return () => < >

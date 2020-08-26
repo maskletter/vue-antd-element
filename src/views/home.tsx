@@ -280,19 +280,19 @@ export default defineComponent(() => {
                 <Row gutter={20}>
                     <Col span={12}>
                         <Card hoverable v-slots={{
-                            cover: <img src={Img1} />
+                            cover: () => <img src={Img1} />
                         }}>
                             <Card.Meta title='又是失业的一天' v-slots={{
-                                description: <text>一起送外卖吧</text>
+                                description: () => <text>一起送外卖吧</text>
                             }} />
                         </Card>
                     </Col>
                     <Col span={12}>
                         <Card hoverable v-slots={{
-                            cover: <img src={Img2} />
+                            cover: () => <img src={Img2} />
                         }}>
                             <Card.Meta title='_〆(´Д｀ )' v-slots={{
-                                description: <text>一起送外卖吧</text>
+                                description: () => <text>一起送外卖吧</text>
                             }} />
                         </Card>
                     </Col>
@@ -322,9 +322,9 @@ export default defineComponent(() => {
         <Br />
         <Card>
             <List data={data} render={(v, index) => <ListItem key={index} content={{
-                avatar: <img style={{width: '50px'}} src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />,
-                description: v.title,
-                title: <text>标题哦</text>
+                avatar: () => <img style={{width: '50px'}} src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />,
+                description: () => v.title,
+                title: () => <text>标题哦</text>
             }}>
                 Center
             </ListItem>} />

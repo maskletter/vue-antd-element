@@ -39,6 +39,7 @@ const router = new class SystemRouter {
         {
           path: 'copy',
           meta: { title: 'copy', icon: ReconciliationOutlined },
+          name: 'copy',
           component: () => import('../views/components/copy')
         },
         {
@@ -69,11 +70,13 @@ const router = new class SystemRouter {
       children: [
         {
           path: 'ckeditor',
+          name: 'ckeditor',
           meta: { title: 'ckeditor', icon: ReconciliationOutlined },
           component: () => import('../views/rich-text/ckeditor')
         },
         {
           path: 'md',
+          name: 'md',
           meta: { title: 'md', icon: ReadOutlined },
           component: () => import('../views/rich-text/md')
         },
@@ -93,11 +96,13 @@ const router = new class SystemRouter {
       children: [
         {
           path: 'polyline',
+          name: 'polyline',
           meta: { title: '折线图', icon: LineChartOutlined },
           component: () => import('../views/chart/polyline')
         },
         {
           path: 'piechart',
+          name: 'piechart',
           meta: { title: '饼状图', icon: PieChartOutlined },
           component: () => import('../views/chart/piechart')
         },
