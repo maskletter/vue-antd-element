@@ -8,13 +8,16 @@ const Ckeditor = defineComponent((props: { height?: number, value?: string }, co
     const $input = ref();
     let _value: string = '';
 
-    watch(() => (props as any).modelValue, (val) => {
-        if(val == _value) return;
-        ckeditor.setData(val);
+    
+    onMounted(() => {
+        init();
+        watch(() => (props as any).modelValue, (val) => {
+            if(val == _value) return;
+            ckeditor.setData(val);
+        })
     })
 
-    onActivated(() => {
-        
+    const init = () => {
         ckeditor = CKEDITOR.replace($input.value as any, {
             height: props.height,
             // toolbar: [
@@ -42,14 +45,22 @@ const Ckeditor = defineComponent((props: { height?: number, value?: string }, co
             _value = ckeditor.getData()
             content.emit('update:modelValue', _value)
         })
+    }
 
+    onActivated(() => {
+        init();
     })
 
     onDeactivated(() => {
         /**
          * ckeditor在keep-alive下回导致异常，因此需要手动销毁
          */
-        ckeditor.destroy();
+        ckeditor?.destroy();
+    })
+
+    onUnmounted(() => {
+        console.log('onUnmounted')
+        ckeditor?.destroy();
     })
 
     return () => <div>

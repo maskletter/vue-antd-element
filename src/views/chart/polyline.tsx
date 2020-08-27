@@ -97,7 +97,6 @@ export default defineComponent(() => {
     };
 
     return () => <Page title={<text>折线图</text>}>
-        <Button type='primary' onClick={() => CropperOpen("wad")}>测试点击</Button>
         <Br />
         <Row gutter={10}>
             <Col span={12}>

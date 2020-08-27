@@ -1,5 +1,5 @@
 import SimpleMDE from 'simplemde';
-import { defineComponent, ref, onMounted, watch, onDeactivated } from 'vue';
+import { defineComponent, ref, onMounted, watch, onDeactivated, onUnmounted } from 'vue';
 import 'simplemde/dist/simplemde.min.css'
 
 const Md = defineComponent((props: { value?: string }, content) => {
@@ -81,12 +81,6 @@ const Md = defineComponent((props: { value?: string }, content) => {
             _value = simplemde.codemirror.getValue();
             content.emit('update:modelValue', _value)
 		})
-    })
-
-
-    onDeactivated(() => {
-        // ckeditor.destroy();
-        console.log('组件销毁了')
     })
 
 

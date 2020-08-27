@@ -14,18 +14,17 @@ const RouterView = defineComponent((props: RouterProps) => {
    
     onMounted(() => {
         watch(() => [$router.name], (val: any) => {
-            system.setKeep(val[0])
+            $router.meta.keepAlive && system.setKeep(val[0])
         }, { immediate: true, deep: true })
     })
     
     const slots = {
         default: ({Component, route}: any) => {
             
-            if(Component && Component.type) {
+            if(Component && Component.type && !Component.type.name) {
                 Component.type.name = route.name
             }
-           
-            return <KeepAlive include={system.keepalive.value}>
+            return <KeepAlive include={system.keepalive.value} max={10}>
                 { Component }
             </KeepAlive>;
         },

@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, onDeactivated, onActivated } from "vue";
+import { defineComponent, ref, onMounted, onDeactivated, onActivated, onUnmounted } from "vue";
 import echarts from 'echarts'
 import 'echarts/theme/macarons';
 import '@/assets/echarts-liquidfill'
@@ -34,14 +34,16 @@ const Chart = defineComponent((props: ChartProps) => {
             // devicePixelRatio: 4
         })
         renderEchart();
-        
-    })
-
-    onActivated(() => {
         window.addEventListener('resize', watchResize)
     })
 
-    onDeactivated(() => {
+    onActivated(() => {
+        // window.addEventListener('resize', watchResize)
+    })
+
+
+
+    onUnmounted(() => {
         // $echart
         window.removeEventListener('resize', watchResize)
     })

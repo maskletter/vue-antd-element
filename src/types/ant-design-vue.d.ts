@@ -9,7 +9,7 @@ declare module 'ant-design-vue/types/menu/menu-item' {
     interface MenuItem {
         $props: {  [index in keyof MenuItem]?: MenuItem[index]; } & {
             onClick?: () => void
-        };
+        } & CommonProps;
     }
 }
 declare module 'ant-design-vue/types/menu/menu-item-group' {
@@ -47,28 +47,28 @@ declare module 'ant-design-vue/types/input/input-group' {
     interface InputGroup {
         $props: {  [index in keyof InputGroup]?: InputGroup[index]; } & {
             placeholder?: string
-        };
+        } & CommonProps;
     }
 }
 declare module 'ant-design-vue/types/input/input-search' {
     interface InputSearch {
         $props: {  [index in keyof InputSearch]?: InputSearch[index]; } & {
             placeholder?: string
-        };
+        } & CommonProps;
     }
 }
 declare module 'ant-design-vue/types/input/password' {
     interface Password {
         $props: {  [index in keyof Password]?: Password[index]; } & {
             placeholder?: string
-        };
+        } & CommonProps;
     }
 }
 declare module 'ant-design-vue/types/input/textArea' {
     interface TextArea {
         $props: {  [index in keyof TextArea]?: TextArea[index]; } & {
             placeholder?: string
-        };
+        } & CommonProps;
     }
 }
 
@@ -76,7 +76,7 @@ declare module 'ant-design-vue/types/tabs/tab-pane' {
     interface TabPane {
         $props: {  [index in keyof TabPane]?: TabPane[index]; } & {
             closable?: boolean
-        };
+        } & CommonProps;
     }
 }
 declare module 'ant-design-vue/types/breadcrumb/breadcrumb-item' {
@@ -84,7 +84,12 @@ declare module 'ant-design-vue/types/breadcrumb/breadcrumb-item' {
         $props: {  [index in keyof BreadcrumbItem]?: BreadcrumbItem[index]; } & {
             class?: string
             onClick?: () => void
-        };
+        } & CommonProps;
+    }
+}
+declare module 'ant-design-vue/types/form/form-item' {
+    interface FormItem {
+        $props: {  [index in keyof FormItem]?: FormItem[index]; } & CommonProps;
     }
 }
 
@@ -106,12 +111,12 @@ declare module 'ant-design-vue' {
     declare class Tabs {
         $props: {  [index in keyof Tabs]?: Tabs[index]; } & {
             onTabClick?: (index: any) => void
-        };
+        } & CommonProps;
     }
     declare class Avatar {
         $props: {  [index in keyof Avatar]?: Avatar[index]; } & {
             style?: CSSProperties
-        };
+        } & CommonProps;
     }
     declare class Popover {
         $props: {  [index in keyof Popover]?: Popover[index]; } & CommonProps;
@@ -125,7 +130,7 @@ declare module 'ant-design-vue' {
     declare class Card {
         $props: {  [index in keyof Card]?: Card[index]; } & {
             class?: string
-        };
+        } & CommonProps;
     }
     declare class Row {
         $props: {  [index in keyof Row]?: Row[index]; } & CommonProps;
@@ -140,7 +145,7 @@ declare module 'ant-design-vue' {
         $props: {  [index in keyof Modal]?: Modal[index]; } & {
             onOk?: () => void
             onCancel?: () => void
-        };
+        } & CommonProps;
     }
     declare class Button {
         $props: {  [index in keyof Button]?: Button[index]; } & {
@@ -150,15 +155,21 @@ declare module 'ant-design-vue' {
     declare class Timeline {
         $props: {  [index in keyof Timeline]?: Timeline[index]; } & CommonProps;
     }
+    declare class Form {
+        $props: {  [index in keyof Form]?: Form[index]; } & CommonProps;
+    }
+    declare class Checkbox {
+        $props: {  [index in keyof Checkbox]?: Checkbox[index]; } & CommonProps;
+    }
     declare class Input {
         $props: {  [index in keyof Input]?: Input[index]; } & {
             placeholder?: string
-        };
+        } & CommonProps;
     }
     declare class List {
         $props: {  [index in keyof List]?: List[index]; } & {
             dataSource?: any
-        };
+        } & CommonProps;
     }
     declare class Spin {
         $props: {  [index in keyof Spin]?: Spin[index]; } & {

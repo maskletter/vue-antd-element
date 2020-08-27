@@ -3,6 +3,7 @@ import Page from '@/components/admin/page';
 import Copy from '@/components/copy';
 import { Card, Button, Input } from 'ant-design-vue';
 import Br from '@/components/br';
+import router from '@/router'
 
 
 export default defineComponent(() => {
