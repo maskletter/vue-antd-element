@@ -1,7 +1,7 @@
 
 
 module.exports = {
-    publicPath: '/dist/',
+    publicPath: './',
     configureWebpack: {
         externals: {
             "echarts": "echarts",

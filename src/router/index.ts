@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
 import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined, IssuesCloseOutlined, CiOutlined, CopyrightOutlined } from '@ant-design/icons-vue'
 import { reactive, createVNode } from 'vue'
 import RouterView from '../components/routerview';
@@ -7,15 +7,10 @@ import Login from '../views/login'
 
 declare type RouteRecordName = string | symbol;
 
-interface AddRoute {
-  (parentName: RouteRecordName, route: RouteRecordRaw): () => void;
-  // (route: RouteRecordRaw): () => void;
-}
 
-interface  SystemRouterInterface {
-  (parentName: RouteRecordName, route: RouteRecordRaw): () => void;
-  (route: RouteRecordRaw): () => void;
-}
+/**
+ * 系统路由及权限管理
+ */
 
 const router = new class SystemRouter {
 
@@ -201,13 +196,13 @@ const router = new class SystemRouter {
     const _router: any = this.defaultRouter.find(v => v.name == 'main')
     this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
     this.$router = createRouter({
-      history: createWebHistory(process.env.BASE_URL),
+      history: createWebHashHistory(process.env.BASE_URL),
       routes: this.defaultRouter
     })
     this.$router.beforeEach((to, form, next) => {
       if(to.matched.length == 0) {
-        console.log(to.path)
-        next('/404');
+        next()
+        // next('/404');
       } else {
         next();
       }
