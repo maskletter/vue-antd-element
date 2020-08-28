@@ -1,5 +1,5 @@
 
-import { defineComponent, VNode, KeepAlive, watch, reactive, provide, ref, inject } from 'vue'
+import { defineComponent, VNode, watchEffect, KeepAlive, watch, reactive, provide, ref, inject, onMounted } from 'vue'
 import { createStyle, makeStyles } from '../theme'
 import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router'
 import { useRoute }  from 'vue-router'
@@ -68,7 +68,7 @@ const App = defineComponent((props: AppInterface, content) => {
     const router = useRouter();
     const route = useRoute();
     const activeUrl = ref(location.pathname+location.search);
-    const tabs: { url: string, name: string, child: VNode, title: string }[] = reactive([]);
+    // const tabs: { url: string, name: string, child: VNode, title: string }[] = reactive([]);
     
     /**渲染页面标题 */
     const renderTitle = (titleType: AppInterface['titleType']) => {
@@ -83,21 +83,25 @@ const App = defineComponent((props: AppInterface, content) => {
    
     provide('app-drawer-collapsed', ref(false));
     
-    watch((() => [route.path] as any), (val: RouteLocationNormalizedLoaded) => {
-        const url: string = route.path;
-        activeUrl.value = url;
-        if(tabs.find(v => v.url == url) == null) {
-            tabs.push({
-                url,
-                title: route.meta.title,
-                name: route.name as string,
-                child: props.tabs ? props.tabs(route) : <text>{route.meta.title}</text>
-            })
-        } else {
-            console.log('已存在')
-        }
-    }, {
-        immediate: true
+    onMounted(() => {
+        watch((() => [route.path] as any), (val: RouteLocationNormalizedLoaded) => {
+            if(!system) return
+            if(!system.isLogin()) return;
+            const url: string = route.path;
+            activeUrl.value = url;
+            if(system.tabs.find(v => v.url == url) == null) {
+                system.tabs.push({
+                    url,
+                    title: route.meta.title,
+                    name: route.name as string,
+                    child: props.tabs ? props.tabs(route) : <text>{route.meta.title}</text>
+                })
+            } else {
+                console.log('已存在')
+            }
+        }, {
+            immediate: true
+        })
     })
 
     
@@ -109,20 +113,20 @@ const App = defineComponent((props: AppInterface, content) => {
 
     const tabsCloseClick = (e: any, index: number) => {
         e.stopPropagation();
-        if(tabs.length == 1 && tabs[index].url == '/') {
+        if(system.tabs.length == 1 && system.tabs[index].url == '/') {
             return ;
         }
-        const statusUrl = tabs[index].url;
-        system.clearKeep(tabs[index].name);
-        tabs.splice(index,1);
+        const statusUrl = system.tabs[index].url;
+        system.clearKeep(system.tabs[index].name);
+        system.tabs.splice(index,1);
         
         if(activeUrl.value != statusUrl) return;
-        if(tabs.length == 0) {
+        if(system.tabs.length == 0) {
             router.push('/')
-        } else if(tabs[index-1]){
-            router.push(tabs[index-1].url)
+        } else if(system.tabs[index-1]){
+            router.push(system.tabs[index-1].url)
         } else {
-            router.push(tabs[index].url)
+            router.push(system.tabs[index].url)
         }
         
     }
@@ -141,7 +145,7 @@ const App = defineComponent((props: AppInterface, content) => {
                     {/* 渲染标签页 */}
                     { props.tabs && <div style={{position:'relative', zIndex: 1}}>
                         <Tabs size='small' activeKey={activeUrl.value} tabBarGutter={0} onTabClick={index => tabsClick(index)}>
-                            { tabs.map((v, index)=> <Tabs.TabPane closable={true} key={v.url} tab={[v.child, <CloseOutlined {...{onClick: (e: any) => tabsCloseClick(e, index) }} style={{position: 'absolute', right: '-8px', top: '13px', color: '#ccc', fontSize: '12px'}} />]}>
+                            { system.tabs.map((v, index)=> <Tabs.TabPane closable={true} key={v.url} tab={[v.child, <CloseOutlined {...{onClick: (e: any) => tabsCloseClick(e, index) }} style={{position: 'absolute', right: '-8px', top: '13px', color: '#ccc', fontSize: '12px'}} />]}>
                             </Tabs.TabPane>) }
                         </Tabs>
                     </div> }

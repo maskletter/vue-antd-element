@@ -92,6 +92,11 @@ declare module 'ant-design-vue/types/form/form-item' {
         $props: {  [index in keyof FormItem]?: FormItem[index]; } & CommonProps;
     }
 }
+declare module 'ant-design-vue/types/button/button' {
+    interface Button {
+        shape: 
+    }
+}
 
 
 declare module 'ant-design-vue' {
@@ -150,6 +155,7 @@ declare module 'ant-design-vue' {
     declare class Button {
         $props: {  [index in keyof Button]?: Button[index]; } & {
             onClick?: () => void
+            shape?: 'circle' | 'circle-outline' | 'round',
         } & CommonProps;
     }
     declare class Timeline {

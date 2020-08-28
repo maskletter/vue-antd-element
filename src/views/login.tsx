@@ -1,8 +1,9 @@
-import { defineComponent, inject, ref } from 'vue'
+import { defineComponent, inject, ref, reactive } from 'vue'
 import { makeStyles, createStyle } from '@/components/theme'
-import { Card, Input, Button } from 'ant-design-vue'
+import { message, Input, Button } from 'ant-design-vue'
 import { UserOutlined, EditFilled } from '@ant-design/icons-vue'
 import Br from '@/components/br'
+import { useRouter } from 'vue-router'
 
 const useStyle = makeStyles((theme: any) => createStyle({
     '@global': {
@@ -62,12 +63,23 @@ export default defineComponent(() => {
 
     const system: SystemProvide = inject<any>('system');
     const loading = ref(false)
+    const router = useRouter();
+    const form = reactive({name:'',password:''})
 
     const login = () => {
-        
+        if(!form.name) {
+            return message.error({content:<text>请输入用户名</text>})
+        }
+        if(!form.password) {
+            return message.error({content:<text>请输入密码</text>})
+        }
         loading.value = true
         setTimeout(() => {
-            system.login();
+            system.login({
+                username: 'tom',
+                token:'dahwdhaw9d89a7d78a6d75a7wdawd'
+            });
+            router.push('/main/home')
         }, 1500)
     }
 
@@ -80,12 +92,12 @@ export default defineComponent(() => {
             </div>
             <div >
                 <img class={styles.avtar} src="http://v.bootstrapmb.com/2019/6/7si3s5212/images/avtar.png" alt=""/>
-                <Input placeholder='用户名' v-slots={{
-                    prefix: <UserOutlined />
+                <Input v-model={[form.name,'value']} placeholder='用户名(随便写)' v-slots={{
+                    prefix: () => <UserOutlined />
                 }} />
                 <Br height={20} />
-                <Input.Password placeholder='密码' v-slots={{
-                    prefix: <EditFilled />
+                <Input.Password v-model={[form.password,'value']} placeholder='密码(随便写)' v-slots={{
+                    prefix: () => <EditFilled />
                 }} />
                 <Br height={60} />
                 <Button loading={loading.value} onClick={login} style={{width: '100%', height: '60px'}} type='danger'>登录</Button>

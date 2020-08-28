@@ -24,8 +24,9 @@ const Drawer = defineComponent(() => {
     const collapsed: any = inject('app-drawer-collapsed');
 
     const routerLink = async (url: string, meta: any, route: any) => {
-        
-        if(meta.dialog) {
+        if(route.meta && route.meta.onClick) {
+            route.meta.onClick()
+        } else if(meta.dialog) {
             Modal(
                 <h3 style={{fontWeight: 600}}>{route.meta.title}</h3>,
                 createVNode(defineAsyncComponent(route.component))).then(() => {
@@ -40,7 +41,7 @@ const Drawer = defineComponent(() => {
     const EachMenu = (router: RouteRecordRaw[], path: string = '') => {
         const dom: VNode[] = [];
         router.forEach(v => {
-            if((v as any).hidden) return;
+            if(v.meta && v.meta.hidden) return;
             if(v.redirect) return;
             if(!v.children) {
                 dom.push(<Menu.Item key={path+v.path} onClick={() => routerLink(path+v.path, v.meta, v)}>
@@ -51,18 +52,26 @@ const Drawer = defineComponent(() => {
                 dom.push(<Menu.SubMenu key={path+v.path} v-slots={{
                     title: () => <>{ v.meta && v.meta.icon && createVNode(v.meta.icon) }<span>{ v.meta ? v.meta.title : v.name }</span></>
                 }}>
-                    { EachMenu(v.children, v.path+'/') }
+                    { EachMenu(v.children, path+v.path+'/') }
                 </Menu.SubMenu>)
             }
         })
         return dom;
     }
-  
+
+    /**
+     * 只获取一层路由的name为main的路由数据
+     */
+    const getRootRouter = () => {
+        const r: RouteRecordRaw = router.registeredRouter.find(v => v.name == 'main') as any;
+        return EachMenu(r.children as any, '/main/');
+    }
+
 
     return () => <div class={styles.root} style={{width: collapsed.value == false ? '240px' : '80px'}}>
         <Scroll>
         <Menu inlineCollapsed={collapsed.value} mode="inline" defaultOpenKeys={$route.matched.map(v => v.path)} selectedKeys={[$route.path]} >
-                { EachMenu(router.registeredRouter) }
+                { getRootRouter() }
                 {/* <Menu.Item key="mail">
                     <UserOutlined />
                     <span>Navigation One</span>

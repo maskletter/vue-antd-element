@@ -7,7 +7,7 @@ import { TeamOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent(() => {
 
-    const location = ref('/test-router');
+    const location = ref('test-router');
     const name = ref('测试添加路由');
     const keep = ref(true)
     const addName = ref('');

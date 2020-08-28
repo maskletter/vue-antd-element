@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
-import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined } from '@ant-design/icons-vue'
+import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined, IssuesCloseOutlined, CiOutlined, CopyrightOutlined } from '@ant-design/icons-vue'
 import { reactive, createVNode } from 'vue'
 import RouterView from '../components/routerview';
+import Main from '@/views/main'
 import Login from '../views/login'
 
 declare type RouteRecordName = string | symbol;
@@ -26,122 +27,146 @@ const router = new class SystemRouter {
 
   public registeredRouter: RouteRecordRaw[] = [];
 
-  private defaultRouter: Array<RouteRecordRaw&{hidden?:boolean}> = [
+  private defaultRouter: Array<RouteRecordRaw> = [
     {
       path: '/login',
       name: 'login',
       meta: { title: '登录', icon: HomeFilled },
-      hidden: true,
       component: Login
     },
     {
-      path: '/',
-      name: 'Home',
-      meta: { title: '首页', icon: HomeFilled, keepAlive: true },
-      component: () => import('../views/home')
+      path: '/404',
+      name: 'four',
+      meta: { title: '404页面', icon: HomeFilled, keepAlive: true },
+      component: () => import('../views/404')
     },
     {
-      path: '/components',
-      meta: { title: '常用组件', icon: SolutionOutlined },
-      name: 'components',
-      component: createVNode(RouterView),
+      path: '/main',
+      name: 'main',
+      component: Main as any,
       children: [
         {
-          path: 'copy',
-          meta: { title: 'copy', icon: ReconciliationOutlined, keepAlive: true },
-          name: 'copy',
-          component: () => import('../views/components/copy')
-        },
-        {
-          path: 'dragula',
-          meta: { title: '拖拽', icon: NodeExpandOutlined, keepAlive: true },
-          name: 'dragula',
-          component: () => import('../views/components/dragula')
-        },
-        {
-          path: 'crop',
-          meta: { title: '图片裁剪', icon: PictureOutlined, keepAlive: true },
-          name: 'crop',
-          component: () => import('../views/components/crop')
-        },
-        {
           path: '',
-          redirect: './copy'
-        }
+          redirect: './home'
+        },
+        {
+          path: 'home',
+          name: 'Home',
+          meta: { title: '首页', icon: HomeFilled, keepAlive: true },
+          component: () => import('../views/home')
+        },
+        
+        {
+          path: 'components',
+          meta: { title: '常用组件', icon: SolutionOutlined },
+          name: 'components',
+          component: createVNode(RouterView),
+          children: [
+            {
+              path: 'copy',
+              meta: { title: 'copy', icon: ReconciliationOutlined, keepAlive: true },
+              name: 'copy',
+              component: () => import('../views/components/copy')
+            },
+            {
+              path: 'dragula',
+              meta: { title: '拖拽', icon: NodeExpandOutlined, keepAlive: true },
+              name: 'dragula',
+              component: () => import('../views/components/dragula')
+            },
+            {
+              path: 'crop',
+              meta: { title: '图片裁剪', icon: PictureOutlined, keepAlive: true },
+              name: 'crop',
+              component: () => import('../views/components/crop')
+            },
+            {
+              path: '',
+              redirect: './copy'
+            }
+          ]
+        },
+        {
+          path: 'rich-text',
+          meta: { title: '富文本', icon: SolutionOutlined },
+          name: 'rich-text',
+          component: createVNode(RouterView),
+          children: [
+            {
+              path: 'ckeditor',
+              name: 'ckeditor',
+              meta: { title: 'ckeditor', icon: ReconciliationOutlined, keepAlive: true },
+              component: () => import('../views/rich-text/ckeditor')
+            },
+            {
+              path: 'md',
+              name: 'md',
+              meta: { title: 'md', icon: ReadOutlined, keepAlive: true },
+              component: () => import('../views/rich-text/md')
+            },
+            {
+              path: '',
+              redirect: './polyline'
+            }
+          ]
+        },
+        {
+          path: 'chart',
+          meta: { title: '图表', icon: AreaChartOutlined },
+          name: 'chart',
+          component: createVNode(RouterView),
+          children: [
+            {
+              path: 'polyline',
+              name: 'polyline',
+              meta: { title: '折线图', icon: LineChartOutlined, keepAlive: true },
+              component: () => import('../views/chart/polyline')
+            },
+            {
+              path: 'piechart',
+              name: 'piechart',
+              meta: { title: '饼状图', icon: PieChartOutlined },
+              component: () => import('../views/chart/piechart')
+            },
+            {
+              path: '',
+              redirect: './polyline'
+            }
+          ]
+        },
+        {
+          path: 'routing-authority',
+          meta: { title: '动态路由', icon: SmileOutlined, keepAlive: true },
+          name: 'routing-authority',
+          component: () => import('../views/routing-authority')
+        },
+        {
+          path: 'about',
+          meta: { title: '关于', icon: IssuesCloseOutlined, keepAlive: true },
+          name: 'About',
+          component: () => import('../views/About.vue')
+        },
+        {
+          path: 'test-404',
+          meta: { title: '模拟跳转到404页面', icon: CiOutlined, keepAlive: true, onClick:()=>{
+            this.$router.push('/xxxx/404/aaa')
+          } },
+          name: 'test-404',
+          component: () => import('../views/About.vue')
+        },
+        {
+          path: 'logs',
+          meta: { title: '更新日志', icon: CopyrightOutlined, dialog: true },
+          name: 'logs',
+          component: () => import('../views/logs')
+        },
+        {
+          path: 'test/:id',
+          meta: { title: '路径传参', hidden: true },
+          name: 'test',
+          component: () => import('../views/About.vue')
+        },
       ]
-    },
-    {
-      path: '/rich-text',
-      meta: { title: '富文本', icon: SolutionOutlined },
-      name: 'rich-text',
-      component: createVNode(RouterView),
-      children: [
-        {
-          path: 'ckeditor',
-          name: 'ckeditor',
-          meta: { title: 'ckeditor', icon: ReconciliationOutlined, keepAlive: true },
-          component: () => import('../views/rich-text/ckeditor')
-        },
-        {
-          path: 'md',
-          name: 'md',
-          meta: { title: 'md', icon: ReadOutlined, keepAlive: true },
-          component: () => import('../views/rich-text/md')
-        },
-        {
-          path: '',
-          redirect: './polyline'
-        }
-      ]
-    },
-    {
-      path: '/chart',
-      meta: { title: '图表', icon: AreaChartOutlined },
-      name: 'chart',
-      component: createVNode(RouterView),
-      children: [
-        {
-          path: 'polyline',
-          name: 'polyline',
-          meta: { title: '折线图', icon: LineChartOutlined, keepAlive: true },
-          component: () => import('../views/chart/polyline')
-        },
-        {
-          path: 'piechart',
-          name: 'piechart',
-          meta: { title: '饼状图', icon: PieChartOutlined },
-          component: () => import('../views/chart/piechart')
-        },
-        {
-          path: '',
-          redirect: './polyline'
-        }
-      ]
-    },
-    {
-      path: '/routing-authority',
-      meta: { title: '动态路由', icon: SmileOutlined, keepAlive: true },
-      name: 'routing-authority',
-      component: () => import('../views/routing-authority')
-    },
-    {
-      path: '/about',
-      meta: { title: '关于', icon: SmileOutlined, keepAlive: true },
-      name: 'About',
-      component: () => import('../views/About.vue')
-    },
-    {
-      path: '/logs',
-      meta: { title: '更新日志', icon: SmileOutlined, dialog: true },
-      name: 'logs',
-      component: () => import('../views/logs')
-    },
-    {
-      path: '/test/:id',
-      meta: { title: '路径传参' },
-      name: 'test',
-      hidden: true,
-      component: () => import('../views/About.vue')
     },
   ]
 
@@ -151,18 +176,21 @@ const router = new class SystemRouter {
   }
  
   addRoute(route: RouteRecordRaw) {
-    if(this.registeredRouter.find(v => v.path == route.path)) {
+    const _router: any = this.registeredRouter.find(v => v.name == 'main')
+    if(_router.children.find((v: any) => v.path == route.path)) {
       console.warn('已存在相同的路由路径');
       return ;
     }
-    this.registeredRouter.push(route);
-    this.$router.addRoute(route)
+    _router.children.push(route);
+    
+    this.$router.addRoute('main',route)
   };
 
   removeRoute(name: RouteRecordName) {
-    for(let index in this.registeredRouter) {
-      if(this.registeredRouter[index].name == name) {
-        this.registeredRouter.splice(index as any,1);
+    const {children}: any = this.registeredRouter.find(v => v.name == 'main')
+    for(let index in children) {
+      if(children[index].name == name) {
+        children.splice(index as any,1);
         break;
       }
     }
@@ -170,6 +198,7 @@ const router = new class SystemRouter {
   }
 
   init() {
+    const _router: any = this.defaultRouter.find(v => v.name == 'main')
     this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
     this.$router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -177,9 +206,9 @@ const router = new class SystemRouter {
     })
     this.$router.beforeEach((to, form, next) => {
       if(to.matched.length == 0) {
-        next('/');
+        console.log(to.path)
+        next('/404');
       } else {
-        console.log(to)
         next();
       }
       
