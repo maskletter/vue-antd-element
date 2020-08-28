@@ -201,8 +201,7 @@ const router = new class SystemRouter {
     })
     this.$router.beforeEach((to, form, next) => {
       if(to.matched.length == 0) {
-        next()
-        // next('/404');
+        next('/404');
       } else {
         next();
       }

@@ -92,11 +92,7 @@ declare module 'ant-design-vue/types/form/form-item' {
         $props: {  [index in keyof FormItem]?: FormItem[index]; } & CommonProps;
     }
 }
-declare module 'ant-design-vue/types/button/button' {
-    interface Button {
-        shape: 
-    }
-}
+
 
 
 declare module 'ant-design-vue' {
@@ -166,6 +162,9 @@ declare module 'ant-design-vue' {
     }
     declare class Checkbox {
         $props: {  [index in keyof Checkbox]?: Checkbox[index]; } & CommonProps;
+    }
+    declare class Badge {
+        $props: {  [index in keyof Badge]?: Badge[index]; } & CommonProps;
     }
     declare class Input {
         $props: {  [index in keyof Input]?: Input[index]; } & {

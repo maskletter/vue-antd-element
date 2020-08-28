@@ -1,13 +1,13 @@
 import { defineComponent, VNode, createVNode, inject } from 'vue';
 import { WarningOutlined, UserAddOutlined, SettingFilled } from '@ant-design/icons-vue';
-import { Modal, Popover, Empty, Avatar, Dropdown, Menu, Spin } from 'ant-design-vue';
+import { Modal, Popover, Badge , Empty, Avatar, Dropdown, Menu, Spin, Input } from 'ant-design-vue';
 import Breadcrumb from '@/components/admin/breadcrumb'
 import Title from '@/components/admin/title';
 import { RouteLocationNormalizedLoaded } from 'vue-router';
 import App from '@/components/admin/app';
 import Drawer from '@/components/admin/drawer';
 import RouterView from '@/components/routerview';
-import router from '@/router';
+import Headimg from '@/assets/headimg.jpg'
 
 
 export default defineComponent(() => {
@@ -41,10 +41,18 @@ export default defineComponent(() => {
             <div style={{display: 'inline-block'}}><Breadcrumb /></div>
         </>} 
         right={<> 
-            <Popover trigger='click' v-slots={{
+            <Popover v-slots={{
                 content: () => <Empty description='暂无消息' />
             }}>
-                <Avatar style={{marginRight: '15px', cursor: 'pointer'}} icon={<UserAddOutlined />} />
+                <Input placeholder='搜索' style={{width: '200px', marginRight: '20px'}} />
+            </Popover>
+
+            <Popover trigger='click' v-slots={{
+                content: () => <Avatar src={Headimg} size={64} />
+            }}>
+                <Badge count={2} style={{marginRight: '15px',}}>
+                    <Avatar size={35} style={{cursor: 'pointer'}} src={Headimg} />
+                </Badge>
             </Popover>
             
             <span onClick={logout}>退出</span>

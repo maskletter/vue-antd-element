@@ -7,6 +7,9 @@
 * "vuex": "^4.0.0-alpha.1"
 
 
+在线预览
+[预览地址](https://maskletter.github.io/vue-antd-element/dist/index.html)
+
 ![image](https://maskletter.github.io/vue-antd-element/dist/show-bg1.png)
 
 ## 进度
