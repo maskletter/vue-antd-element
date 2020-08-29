@@ -41,17 +41,24 @@ export default defineComponent(() => {
             <div style={{display: 'inline-block'}}><Breadcrumb /></div>
         </>} 
         right={<> 
-            <Popover v-slots={{
-                content: () => <Empty description='暂无消息' />
+            <Popover trigger='click' v-slots={{
+                content: () => <Empty description='暂无搜索内容' />
             }}>
                 <Input placeholder='搜索' style={{width: '200px', marginRight: '20px'}} />
             </Popover>
 
             <Popover trigger='click' v-slots={{
-                content: () => <Avatar src={Headimg} size={64} />
+                content: () => <>
+                    
+                    <div style={{textAlign:'center'}}>
+                        <Avatar src={Headimg} size={64} />
+                        <div style={{margin: '14px',width:'140px'}}>maskletter</div>
+                    </div>
+                </>
             }}>
                 <Badge count={2} style={{marginRight: '15px',}}>
                     <Avatar size={35} style={{cursor: 'pointer'}} src={Headimg} />
+                    
                 </Badge>
             </Popover>
             

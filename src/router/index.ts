@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw, Router } from 'vue-router';
-import { HomeFilled, SmileOutlined, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined, IssuesCloseOutlined, CiOutlined, CopyrightOutlined } from '@ant-design/icons-vue'
+import { HomeFilled, SmileOutlined, TableOutlined, GithubFilled, ReadOutlined, ReconciliationOutlined, SolutionOutlined, AreaChartOutlined, LineChartOutlined, PieChartOutlined, NodeExpandOutlined, PictureOutlined, IssuesCloseOutlined, CiOutlined, CopyrightOutlined } from '@ant-design/icons-vue'
 import { reactive, createVNode } from 'vue'
 import RouterView from '../components/routerview';
 import Main from '@/views/main'
@@ -50,7 +50,12 @@ const router = new class SystemRouter {
           meta: { title: '首页', icon: HomeFilled, keepAlive: true },
           component: () => import('../views/home')
         },
-        
+        {
+          path: 'tabls',
+          name: 'tabls',
+          meta: { title: '表格', icon: TableOutlined, keepAlive: true },
+          component: () => import('../views/table')
+        },
         {
           path: 'components',
           meta: { title: '常用组件', icon: SolutionOutlined },
@@ -62,6 +67,12 @@ const router = new class SystemRouter {
               meta: { title: 'copy', icon: ReconciliationOutlined, keepAlive: true },
               name: 'copy',
               component: () => import('../views/components/copy')
+            },
+            {
+              path: 'container',
+              meta: { title: '功能性组件', icon: ReconciliationOutlined, keepAlive: true },
+              name: 'container',
+              component: () => import('../views/components/container')
             },
             {
               path: 'dragula',
@@ -136,12 +147,6 @@ const router = new class SystemRouter {
           component: () => import('../views/routing-authority')
         },
         {
-          path: 'about',
-          meta: { title: '关于', icon: IssuesCloseOutlined, keepAlive: true },
-          name: 'About',
-          component: () => import('../views/About.vue')
-        },
-        {
           path: 'test-404',
           meta: { title: '模拟跳转到404页面', icon: CiOutlined, keepAlive: true, onClick:()=>{
             this.$router.push('/xxxx/404/aaa')
@@ -150,10 +155,21 @@ const router = new class SystemRouter {
           component: () => import('../views/About.vue')
         },
         {
+          path: 'github',
+          meta: { title: 'github', icon: GithubFilled, link: 'https://github.com/maskletter/vue-antd-element' },
+          component: () => import('../views/logs')
+        },
+        {
           path: 'logs',
           meta: { title: '更新日志', icon: CopyrightOutlined, dialog: true },
           name: 'logs',
           component: () => import('../views/logs')
+        },
+        {
+          path: 'about',
+          meta: { title: '关于', icon: IssuesCloseOutlined, keepAlive: true },
+          name: 'About',
+          component: () => import('../views/About.vue')
         },
         {
           path: 'test/:id',

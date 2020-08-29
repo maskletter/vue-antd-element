@@ -166,6 +166,21 @@ declare module 'ant-design-vue' {
     declare class Badge {
         $props: {  [index in keyof Badge]?: Badge[index]; } & CommonProps;
     }
+    declare class Table {
+        $props: {  [index in keyof Table]?: Table[index]; } & CommonProps;
+    }
+    declare class Pagination {
+        $props: {  [index in keyof Pagination]?: Pagination[index]; } & CommonProps & {
+            onChange?: () => void
+        };
+    }
+    declare class Popconfirm {
+        $props: {  [index in keyof Popconfirm]?: Popconfirm[index]; } & CommonProps & {
+            onConfirm?: () => void
+            onCancel?: () => void
+            onVisibleChange?: (visible: boolean) => void
+        };
+    }
     declare class Input {
         $props: {  [index in keyof Input]?: Input[index]; } & {
             placeholder?: string

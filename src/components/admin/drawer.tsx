@@ -24,8 +24,10 @@ const Drawer = defineComponent(() => {
     const collapsed: any = inject('app-drawer-collapsed');
 
     const routerLink = async (url: string, meta: any, route: any) => {
-        if(route.meta && route.meta.onClick) {
-            route.meta.onClick()
+        if(meta.link) {
+            window.open(meta.link)
+        } else if(meta.onClick) {
+            meta.onClick()
         } else if(meta.dialog) {
             Modal(
                 <h3 style={{fontWeight: 600}}>{route.meta.title}</h3>,
