@@ -31,9 +31,9 @@ const systemProvide: SystemProvide = {
     logout: () => {
         sessionStorage.removeItem('user')
         router.$router.push('/login');
-        /**情况tab标签 */
+        /**清除tab标签 */
         tabs.length = 0;
-        /**情况缓存 */
+        /**清除缓存 */
         keepMaps.value = [];
         isLogin.value = false;
     },

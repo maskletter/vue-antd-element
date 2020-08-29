@@ -41,8 +41,6 @@ const Chart = defineComponent((props: ChartProps) => {
         // window.addEventListener('resize', watchResize)
     })
 
-
-
     onUnmounted(() => {
         // $echart
         window.removeEventListener('resize', watchResize)

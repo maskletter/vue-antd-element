@@ -21,10 +21,8 @@ type ElementAttrs<T> = T & EventHandlers<Events> & ReservedProps
  */
 const Container = defineComponent((props: ElementAttrs<HTMLAttributes&{[props: string]: any}&{tag?: any}>, content) => {
 
-   
     return () => <>
-        { props.tag ? createVNode(props.tag) : createVNode(content.slots.default as any) }
-        {/* { createVNode(content.slots.default as any) } */}
+        { props.tag ? createVNode(props.tag, content.attrs) : createVNode(content.slots.default as any, content.attrs) }
     </>
 
 })

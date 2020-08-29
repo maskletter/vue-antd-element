@@ -39,7 +39,7 @@ interface DragulaProps {
 
 const Dragula = defineComponent((props: DragulaProps, content) => {
 
-    const $el: { value: Element } = ref<any>();
+    const $el: any = ref<any>();
     let $drake!: dragula.Drake;
 
     onMounted(() => {
@@ -56,7 +56,7 @@ const Dragula = defineComponent((props: DragulaProps, content) => {
         props.onCloned && $drake.on('cloned', props.onCloned)
     })
 
-    return () => <div class='dragula-container' ref={(e: any) => $el.value = e}>
+    return () => <div class='dragula-container' ref={$el}>
         { content.slots.default && content.slots.default() }
     </div>
 
