@@ -48,7 +48,7 @@ export default defineComponent((props, content) => {
      * 类似于vuex
      */
   
-
+console.log(content)
     //模拟获取登录信息
     if(sessionStorage.getItem('user')) {
         //实际上这里需要接口请求获取登录信息

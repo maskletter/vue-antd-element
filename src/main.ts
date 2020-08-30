@@ -12,7 +12,9 @@ const app  = createApp(App);
 app.config.performance = false
 app.use(SystemPlugin)
 app.use(router.$router);
-// app.config.globalProperties.$
+app.config.globalProperties.$aa = () => {
+    
+}
 router.$router.isReady().then(() => {
     app.use(antd as any);
     app.mount('#app')

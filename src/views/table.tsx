@@ -62,7 +62,7 @@ export default defineComponent(() => {
         };
     }
 
-    return () => <Page title='还不完整的table组件'>
+    return () => <Page title='还不完整的table组件221'>
       
         <Card title='传值渲染'>
             <Table data={data}

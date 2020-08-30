@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue';
 import Page from '@/components/admin/page';
-import Dragula from '@/components/dragula';
+import Dragula, { DragulaChild } from '@/components/dragula';
 import { Row, Card, Col } from 'ant-design-vue';
 import Br from '@/components/br';
 
@@ -30,31 +30,31 @@ export default defineComponent(() => {
             <Col span={8}>
                 <Card>
                   <h4>左列</h4>
-                  <ul class="test-ul" dragula-slide>
+                  <DragulaChild tag='ul' class='test-ul'>
                     { school.map((v, index) => <li key={index}>
                       第一个{ v }
                     </li>) }
-                  </ul>
+                  </DragulaChild>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card>
                   <h4>中列</h4>
-                  <ul class="test-ul" dragula-slide>
+                  <DragulaChild tag='ul' class='test-ul'>
                     { school.map((v, index) => <li key={index}>
                       第二个{ v }
                     </li>) }
-                  </ul>
+                  </DragulaChild>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card>
                   <h4>右列</h4>
-                  <ul class="test-ul" dragula-slide>
+                  <DragulaChild tag='ul' class='test-ul'>
                     { school.map((v, index) => <li key={index}>
                       第三个{ v }
                     </li>) }
-                  </ul>
+                  </DragulaChild>
                 </Card>
             </Col>
           </Row>
@@ -62,11 +62,12 @@ export default defineComponent(() => {
         <Br />
         { JSON.stringify(school2.value) }
         <Dragula onDrop={drag2Event}>
-            <ul dragula-slide style={{padding: '0px'}}>
+            <DragulaChild tag='ul' style={{padding: '0px'}}>
                 { school.map((v, index) => <li style={{margin: '0px 0px 5px', listStyle: 'none'}} data-index={index} key={index}>
                     <Card bodyStyle={{padding: '15px'}} hoverable>{ v }</Card>
                 </li>) }
-            </ul>
+            </DragulaChild>
+            
         </Dragula>
     </Page>
 

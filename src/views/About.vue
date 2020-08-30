@@ -1,5 +1,5 @@
 <template>
-  <Page class="about" style='text-align: center'>
+  <Page class="about" style='text-align: center'>33311122
       <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld />
   </Page>

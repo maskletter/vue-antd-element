@@ -1,7 +1,7 @@
 
 import 'dragula/dist/dragula.css'
 import dragula from 'dragula'
-import { defineComponent, ref, ComponentInternalInstance, onMounted } from 'vue'
+import { defineComponent, ref, ComponentInternalInstance, onMounted, createVNode, VNode } from 'vue'
 
 export interface DragulaConfig{
     isContainer?(el: Element|undefined):  boolean
@@ -62,6 +62,21 @@ const Dragula = defineComponent((props: DragulaProps, content) => {
 
 })
 
+const DragulaChild = defineComponent((props:{ tag?: string }, content) => {
+    
+    return () => createVNode(props.tag as any, {
+        'dragula-slide': true,
+        ...content.attrs
+    }, [(content.slots.default as any)()])
+})
+DragulaChild.props = {
+    tag: {
+        type: String,
+        default: 'div'
+    }
+}
+
+
 Dragula.props = {
     config: Object,
     onDrag: Function,
@@ -74,5 +89,5 @@ Dragula.props = {
     onOut: Function,
     onCloned: Function,
 } as any
-
+export { DragulaChild }
 export default Dragula;

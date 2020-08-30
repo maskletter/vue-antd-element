@@ -19,7 +19,7 @@ export default defineComponent(() => {
         Modal.confirm({
             title: <div>
                 <WarningOutlined style={{marginRight: '15px', color: '#faad14'}} />
-                系统提示
+                系统提示233
             </div>,
             content: '确定退出系统吗',
             okText: '确定',

@@ -1,9 +1,11 @@
 import { defineComponent, inject, ref, reactive } from 'vue'
 import { makeStyles, createStyle } from '@/components/theme'
-import { message, Input, Button } from 'ant-design-vue'
+import { message, Input, Button, Avatar } from 'ant-design-vue'
 import { UserOutlined, EditFilled } from '@ant-design/icons-vue'
 import Br from '@/components/br'
 import { useRouter } from 'vue-router'
+import Headimg from '@/assets/headimg.jpg'
+
 
 const useStyle = makeStyles((theme: any) => createStyle({
     '@global': {
@@ -91,7 +93,8 @@ export default defineComponent(() => {
                 <span style={{background: '#f1c85f'}}></span>
             </div>
             <div >
-                <img class={styles.avtar} src="http://v.bootstrapmb.com/2019/6/7si3s5212/images/avtar.png" alt=""/>
+                <Avatar class={styles.avtar} size={69} src={Headimg} />
+                {/* <img class={styles.asvtar} src={Headimg} alt=""/> */}
                 <Input v-model={[form.name,'value']} placeholder='用户名(随便写)' v-slots={{
                     prefix: () => <UserOutlined />
                 }} />
