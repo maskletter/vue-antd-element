@@ -1,6 +1,7 @@
 import { ref, App, VNode, reactive } from "vue";
 import router from '@/router';
 import { RouteLocationNormalizedLoaded } from 'vue-router';
+import { account } from '@/mock/user'
 
 const isLogin = ref(sessionStorage.getItem('user')?true:false);
 const keepMaps = ref<string[]>([]);
@@ -16,10 +17,18 @@ const systemProvide: SystemProvide = {
      * 异步获取登录状态
      * 可以在这里处理接口
      */
-    verificationLogin: () => {
-        return new Promise(resolve => {
+    verificationLogin: () => { 
+        return new Promise((resolve, reject) => {
             isLogin.value = true;
-            setTimeout(resolve, 1000)
+            setTimeout(() =>  {
+                if(sessionStorage.getItem('user')) {
+                    const user = JSON.parse(sessionStorage.getItem('user') as any);
+                    router.permissionComparison(account.getRoute(user.username).authority)
+                    resolve(user)
+                } else {
+                    reject()
+                }
+            }, 1000)
         })
     },
    

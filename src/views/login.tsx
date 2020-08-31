@@ -66,7 +66,7 @@ export default defineComponent(() => {
     const system: SystemProvide = inject<any>('system');
     const loading = ref(false)
     const router = useRouter();
-    const form = reactive({name:'',password:''})
+    const form = reactive({name:'admin',password:'123456'})
 
     const login = () => {
         if(!form.name) {
@@ -78,7 +78,7 @@ export default defineComponent(() => {
         loading.value = true
         setTimeout(() => {
             system.login({
-                username: 'tom',
+                username: form.name,
                 token:'dahwdhaw9d89a7d78a6d75a7wdawd'
             });
             router.push('/main/home')

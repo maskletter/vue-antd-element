@@ -23,6 +23,136 @@ const router = new class SystemRouter {
 
   public registeredRouter: RouteRecordRaw[] = [];
 
+  private authRouter: RouteRecordRaw[] = [
+    {
+      path: 'home',
+      name: 'Home',
+      meta: { title: '首页', icon: HomeFilled, keepAlive: true, button: ['card'] },
+      component: () => import('../views/home')
+    },
+    {
+      path: 'tabls',
+      name: 'tabls',
+      meta: { title: '表格', icon: TableOutlined, keepAlive: true },
+      component: () => import('../views/table')
+    },
+    {
+      path: 'components',
+      meta: { title: '常用组件', icon: SolutionOutlined },
+      name: 'components',
+      component: createVNode(RouterView),
+      children: [
+        {
+          path: 'copy',
+          meta: { title: 'copy', icon: ReconciliationOutlined, keepAlive: true },
+          name: 'copy',
+          component: () => import('../views/components/copy')
+        },
+        {
+          path: 'container',
+          meta: { title: '功能性组件', icon: ReconciliationOutlined, keepAlive: true },
+          name: 'container',
+          component: () => import('../views/components/container')
+        },
+        {
+          path: 'dragula',
+          meta: { title: '拖拽', icon: NodeExpandOutlined, keepAlive: true },
+          name: 'dragula',
+          component: () => import('../views/components/dragula')
+        },
+        {
+          path: 'crop',
+          meta: { title: '图片裁剪', icon: PictureOutlined, keepAlive: true },
+          name: 'crop',
+          component: () => import('../views/components/crop')
+        },
+        {
+          path: '',
+          redirect: './copy'
+        }
+      ]
+    },
+    {
+      path: 'rich-text',
+      meta: { title: '富文本', icon: SolutionOutlined },
+      name: 'rich-text',
+      component: createVNode(RouterView),
+      children: [
+        {
+          path: 'ckeditor',
+          name: 'ckeditor',
+          meta: { title: 'ckeditor', icon: ReconciliationOutlined, keepAlive: true },
+          component: () => import('../views/rich-text/ckeditor')
+        },
+        {
+          path: 'md',
+          name: 'md',
+          meta: { title: 'md', icon: ReadOutlined, keepAlive: true },
+          component: () => import('../views/rich-text/md')
+        },
+        {
+          path: '',
+          redirect: './polyline'
+        }
+      ]
+    },
+    {
+      path: 'chart',
+      meta: { title: '图表', icon: AreaChartOutlined },
+      name: 'chart',
+      component: createVNode(RouterView),
+      children: [
+        {
+          path: 'polyline',
+          name: 'polyline',
+          meta: { title: '折线图', icon: LineChartOutlined, keepAlive: true },
+          component: () => import('../views/chart/polyline')
+        },
+        {
+          path: 'piechart',
+          name: 'piechart',
+          meta: { title: '饼状图', icon: PieChartOutlined },
+          component: () => import('../views/chart/piechart')
+        },
+        {
+          path: '',
+          redirect: './polyline'
+        }
+      ]
+    },
+    {
+      path: 'routing-authority',
+      meta: { title: '动态路由', icon: SmileOutlined, keepAlive: true },
+      name: 'routing-authority',
+      component: () => import('../views/routing-authority')
+    },
+    {
+      path: 'test-404',
+      meta: { title: '模拟跳转到404页面', icon: CiOutlined, keepAlive: true, onClick:()=>{
+        this.$router.push('/xxxx/404/aaa')
+      } },
+      name: 'test-404',
+      component: () => import('../views/About.vue')
+    },
+    {
+      path: 'github',
+      meta: { title: 'github', icon: GithubFilled, link: 'https://github.com/maskletter/vue-antd-element' },
+      component: () => import('../views/logs')
+    },
+    {
+      path: 'logs',
+      meta: { title: '更新日志', icon: CopyrightOutlined, dialog: true },
+      name: 'logs',
+      component: () => import('../views/logs')
+    },
+    {
+      path: 'about',
+      meta: { title: '关于', icon: IssuesCloseOutlined, keepAlive: true },
+      name: 'About',
+      component: () => import('../views/About.vue')
+    },
+  ]
+
   private defaultRouter: Array<RouteRecordRaw> = [
     {
       path: '/login',
@@ -41,146 +171,30 @@ const router = new class SystemRouter {
       name: MainKey,
       component: Main as any,
       children: [
-        {
-          path: '',
-          redirect: './home'
-        },
-        {
-          path: 'home',
-          name: 'Home',
-          meta: { title: '首页', icon: HomeFilled, keepAlive: true, button: ['card'] },
-          component: () => import('../views/home')
-        },
-        {
-          path: 'tabls',
-          name: 'tabls',
-          meta: { title: '表格', icon: TableOutlined, keepAlive: true },
-          component: () => import('../views/table')
-        },
-        {
-          path: 'components',
-          meta: { title: '常用组件', icon: SolutionOutlined },
-          name: 'components',
-          component: createVNode(RouterView),
-          children: [
-            {
-              path: 'copy',
-              meta: { title: 'copy', icon: ReconciliationOutlined, keepAlive: true },
-              name: 'copy',
-              component: () => import('../views/components/copy')
-            },
-            {
-              path: 'container',
-              meta: { title: '功能性组件', icon: ReconciliationOutlined, keepAlive: true },
-              name: 'container',
-              component: () => import('../views/components/container')
-            },
-            {
-              path: 'dragula',
-              meta: { title: '拖拽', icon: NodeExpandOutlined, keepAlive: true },
-              name: 'dragula',
-              component: () => import('../views/components/dragula')
-            },
-            {
-              path: 'crop',
-              meta: { title: '图片裁剪', icon: PictureOutlined, keepAlive: true },
-              name: 'crop',
-              component: () => import('../views/components/crop')
-            },
-            {
-              path: '',
-              redirect: './copy'
-            }
-          ]
-        },
-        {
-          path: 'rich-text',
-          meta: { title: '富文本', icon: SolutionOutlined },
-          name: 'rich-text',
-          component: createVNode(RouterView),
-          children: [
-            {
-              path: 'ckeditor',
-              name: 'ckeditor',
-              meta: { title: 'ckeditor', icon: ReconciliationOutlined, keepAlive: true },
-              component: () => import('../views/rich-text/ckeditor')
-            },
-            {
-              path: 'md',
-              name: 'md',
-              meta: { title: 'md', icon: ReadOutlined, keepAlive: true },
-              component: () => import('../views/rich-text/md')
-            },
-            {
-              path: '',
-              redirect: './polyline'
-            }
-          ]
-        },
-        {
-          path: 'chart',
-          meta: { title: '图表', icon: AreaChartOutlined },
-          name: 'chart',
-          component: createVNode(RouterView),
-          children: [
-            {
-              path: 'polyline',
-              name: 'polyline',
-              meta: { title: '折线图', icon: LineChartOutlined, keepAlive: true },
-              component: () => import('../views/chart/polyline')
-            },
-            {
-              path: 'piechart',
-              name: 'piechart',
-              meta: { title: '饼状图', icon: PieChartOutlined },
-              component: () => import('../views/chart/piechart')
-            },
-            {
-              path: '',
-              redirect: './polyline'
-            }
-          ]
-        },
-        {
-          path: 'routing-authority',
-          meta: { title: '动态路由', icon: SmileOutlined, keepAlive: true },
-          name: 'routing-authority',
-          component: () => import('../views/routing-authority')
-        },
-        {
-          path: 'test-404',
-          meta: { title: '模拟跳转到404页面', icon: CiOutlined, keepAlive: true, onClick:()=>{
-            this.$router.push('/xxxx/404/aaa')
-          } },
-          name: 'test-404',
-          component: () => import('../views/About.vue')
-        },
-        {
-          path: 'github',
-          meta: { title: 'github', icon: GithubFilled, link: 'https://github.com/maskletter/vue-antd-element' },
-          component: () => import('../views/logs')
-        },
-        {
-          path: 'logs',
-          meta: { title: '更新日志', icon: CopyrightOutlined, dialog: true },
-          name: 'logs',
-          component: () => import('../views/logs')
-        },
-        {
-          path: 'about',
-          meta: { title: '关于', icon: IssuesCloseOutlined, keepAlive: true },
-          name: 'About',
-          component: () => import('../views/About.vue')
-        },
-        {
-          path: 'test/:id',
-          meta: { title: '路径传参', hidden: true },
-          name: 'test',
-          component: () => import('../views/About.vue')
-        },
+        // {
+        //   path: '',
+        //   redirect: './home'
+        // },
+        
+        // {
+        //   path: 'test/:id',
+        //   meta: { title: '路径传参', hidden: true },
+        //   name: 'test',
+        //   component: () => import('../views/About.vue')
+        // },
       ]
     },
   ]
+
+
+  public permissionComparison(auth: any[] | string) {
+    if(typeof(auth) == 'string' && auth == '*') {
+      this.authRouter.forEach(v => {
+        this.addRoute(v);
+      })
+    }
+    console.log(auth)
+  }
 
   //检查路由格式
   checkRoute() {
@@ -209,20 +223,23 @@ const router = new class SystemRouter {
     this.$router.removeRoute(name);
   }
 
-  init() {
-    const _router: any = this.defaultRouter.find(v => v.name == MainKey)
-    this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
-    this.$router = createRouter({
-      history: createWebHashHistory(process.env.BASE_URL),
-      routes: this.defaultRouter
-    })
-    this.$router.beforeEach((to, form, next) => {
+  lostPage() {
+    this.$router.beforeEach(async (to,form,next) => {
       if(to.matched.length == 0) {
         next('/404');
       } else {
         next();
       }
       
+    })
+  }
+
+  init() {
+    const _router: any = this.defaultRouter.find(v => v.name == MainKey)
+    this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
+    this.$router = createRouter({
+      history: createWebHashHistory(process.env.BASE_URL),
+      routes: this.defaultRouter
     })
   }
 

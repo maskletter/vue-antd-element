@@ -1,15 +1,10 @@
-import { defineComponent, VNode, KeepAlive, createVNode, ref, provide } from 'vue'
-import App from './components/admin/app'
+import { defineComponent, VNode, KeepAlive, createVNode, ref, provide, inject } from 'vue'
 import { ThemeProvide, makeStyles, createStyle } from './components/theme'
-import Title from './components/admin/title'
-import Drawer from './components/admin/drawer'
-import Breadcrumb from './components/admin/breadcrumb'
-import { RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import RouterView from './components/routerview'
-import { SettingFilled, UserAddOutlined, WarningOutlined } from '@ant-design/icons-vue'
-import { Dropdown, Menu, Avatar, Popover, Empty, Modal, Spin } from 'ant-design-vue'
-import Login from './views/login'
-import { KeepAliveList } from './components/routerview'
+import { Spin } from 'ant-design-vue'
+import sysRouter from './router'
+
 
 
 
@@ -39,22 +34,22 @@ export default defineComponent((props, content) => {
 
     const styles = useStyle('app-style');
   
+    const system: SystemProvide = inject<any>('system');
     const router = useRouter();
-   
+    const route = useRoute();
     const loadingLoginInfo = ref(false);
-    
-    //模拟获取登录信息
-    if(sessionStorage.getItem('user')) {
-        //实际上这里需要接口请求获取登录信息
-        setTimeout(() => {
-            loadingLoginInfo.value = true;
-        },1000)
-    } else {
-        router.push('/login')
-        loadingLoginInfo.value = true;
-    }
-    
 
+    //模拟获取登录信息
+    system.verificationLogin().then(user => {
+        sysRouter.lostPage();
+        router.replace(route.path)
+        console.log('注册用户信息成功')
+    }).catch(() => {
+
+    }).finally(() => {
+        loadingLoginInfo.value = true
+    })
+    
 
     const loginLoading =  <div style={{height:'100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Spin size='large' tip='获取登录信息中'></Spin>
