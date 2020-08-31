@@ -1,7 +1,7 @@
 <template>
-  <Page class="about" style='text-align: center'>33311122
+  <Page class="about" style='text-align: center'>
       <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld />
+      <HelloWorld  />
   </Page>
 </template>
 <script>

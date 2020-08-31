@@ -9,6 +9,7 @@ import Img1 from '@/assets/img1.png';
 import Img2 from '@/assets/img2.jpg';
 import List, { ListItem } from '@/components/list';
 import Copy from '@/components/copy';
+import Authority from '@/components/authority';
 
 const useStyle = makeStyles(() => createStyle({
     number: {
@@ -230,8 +231,10 @@ export default defineComponent(() => {
           title: 'Ant Design Title 4',
         },
     ];
+    
 
     return () => <Page>
+        
         <Row gutter={20}>
             <Col span={6}>
                 <Card bodyStyle={{padding: '16px'}} hoverable>
@@ -288,13 +291,16 @@ export default defineComponent(() => {
                         </Card>
                     </Col>
                     <Col span={12}>
-                        <Card hoverable v-slots={{
+                        <Authority auth='card' hoverable tag={Card} v-slots={{
                             cover: () => <img src={Img2} />
                         }}>
                             <Card.Meta title='_〆(´Д｀ )' v-slots={{
-                                description: () => <text>一起送外卖吧</text>
+                                description: () => <div>
+                                    <text>通过Authority标签实现动态权限控制</text><br />
+                                    <text>一起送外卖吧</text>
+                                </div>
                             }} />
-                        </Card>
+                        </Authority>
                     </Col>
                 </Row>
             </Col>

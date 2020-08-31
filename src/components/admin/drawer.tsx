@@ -2,6 +2,7 @@ import { defineComponent, VNode, onMounted, createVNode, inject, ref, defineAsyn
 import { makeStyles, createStyle } from '../theme';
 import { Menu } from 'ant-design-vue'
 import { UserOutlined } from '@ant-design/icons-vue'
+import { MainKey } from '@/router'
 import { useRouter, RouteRecordRaw, useRoute } from 'vue-router';
 // import { Modal } from 'ant-design-vue'
 import Modal from '@/components/modal'
@@ -65,7 +66,7 @@ const Drawer = defineComponent(() => {
      * 只获取一层路由的name为main的路由数据
      */
     const getRootRouter = () => {
-        const r: RouteRecordRaw = router.registeredRouter.find(v => v.name == 'main') as any;
+        const r: RouteRecordRaw = router.registeredRouter.find(v => v.name == MainKey) as any;
         return EachMenu(r.children as any, '/main/');
     }
 

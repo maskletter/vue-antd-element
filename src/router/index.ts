@@ -7,6 +7,7 @@ import Login from '../views/login'
 
 declare type RouteRecordName = string | symbol;
 
+export const MainKey = Symbol();
 
 /**
  * 系统路由及权限管理
@@ -37,7 +38,7 @@ const router = new class SystemRouter {
     },
     {
       path: '/main',
-      name: 'main',
+      name: MainKey,
       component: Main as any,
       children: [
         {
@@ -47,7 +48,7 @@ const router = new class SystemRouter {
         {
           path: 'home',
           name: 'Home',
-          meta: { title: '首页', icon: HomeFilled, keepAlive: true },
+          meta: { title: '首页', icon: HomeFilled, keepAlive: true, button: ['card'] },
           component: () => import('../views/home')
         },
         {
@@ -187,18 +188,18 @@ const router = new class SystemRouter {
   }
  
   addRoute(route: RouteRecordRaw) {
-    const _router: any = this.registeredRouter.find(v => v.name == 'main')
+    const _router: any = this.registeredRouter.find(v => v.name == MainKey)
     if(_router.children.find((v: any) => v.path == route.path)) {
       console.warn('已存在相同的路由路径');
       return ;
     }
     _router.children.push(route);
     
-    this.$router.addRoute('main',route)
+    this.$router.addRoute(MainKey,route)
   };
 
   removeRoute(name: RouteRecordName) {
-    const {children}: any = this.registeredRouter.find(v => v.name == 'main')
+    const {children}: any = this.registeredRouter.find(v => v.name == MainKey)
     for(let index in children) {
       if(children[index].name == name) {
         children.splice(index as any,1);
@@ -209,7 +210,7 @@ const router = new class SystemRouter {
   }
 
   init() {
-    const _router: any = this.defaultRouter.find(v => v.name == 'main')
+    const _router: any = this.defaultRouter.find(v => v.name == MainKey)
     this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
     this.$router = createRouter({
       history: createWebHashHistory(process.env.BASE_URL),

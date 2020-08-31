@@ -43,12 +43,6 @@ export default defineComponent((props, content) => {
    
     const loadingLoginInfo = ref(false);
     
-    /**
-     * 用来处理程序中的公共及方法，
-     * 类似于vuex
-     */
-  
-console.log(content)
     //模拟获取登录信息
     if(sessionStorage.getItem('user')) {
         //实际上这里需要接口请求获取登录信息
