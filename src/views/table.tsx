@@ -3,7 +3,7 @@ import { defineComponent, reactive, Ref } from 'vue'
 import Table from '@/components/table'
 import Page from '@/components/admin/page'
 import { AccountBookFilled } from "@ant-design/icons-vue";
-import { Button, Card, Popconfirm } from 'ant-design-vue';
+import { Button, Card, Popconfirm, Input } from 'ant-design-vue';
 import Container from '@/components/container';
 import Br from '@/components/br';
 
@@ -52,11 +52,12 @@ export default defineComponent(() => {
     ]
 
     const data2 = (search: any) => {
+        console.log(search)
         return {
             data: [
-                { id: 33, name: '王五' },
-                { id: 33, name: '赵六' },
-                { id: 34, name: '赵awdawd六' }
+                { id: 33, name: search.current+'王五' },
+                { id: 33, name: search.current+'赵六' },
+                { id: 34, name: search.current+'赵awdawd六' }
             ],
             total: 100
         };

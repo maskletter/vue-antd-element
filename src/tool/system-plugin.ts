@@ -34,17 +34,19 @@ const systemProvide: SystemProvide = {
    
     login: (data: any) => {
         sessionStorage.setItem('user', JSON.stringify(data))
-        router.$router.replace('/');
+        // router.$router.replace('/');
         isLogin.value = true;
     },
     logout: () => {
-        sessionStorage.removeItem('user')
-        router.$router.push('/login');
+        sessionStorage.removeItem('user');
+        location.reload()
+        // router.authRouter.forEach(v => router.removeRoute(v.name as any))
+        // router.$router.push('/login');
         /**清除tab标签 */
-        tabs.length = 0;
+        // tabs.length = 0;
         /**清除缓存 */
-        keepMaps.value = [];
-        isLogin.value = false;
+        // keepMaps.value = [];
+        // isLogin.value = false;
     },
     setKeep: (name: string) => {
         if(keepMaps.value.indexOf(name) == -1) {

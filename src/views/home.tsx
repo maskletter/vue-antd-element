@@ -291,7 +291,19 @@ export default defineComponent(() => {
                         </Card>
                     </Col>
                     <Col span={12}>
-                        <Authority auth='card' hoverable tag={Card} v-slots={{
+                        <Authority auth='card' tag={Card}
+                            show={() => <Card v-slots={{
+                                    cover: () => <img src={Img2} />
+                                }}>
+                                <Card.Meta title='_〆(´Д｀ )' v-slots={{
+                                    description: () => <div>
+                                        <text>通过Authority标签实现动态权限控制</text><br />
+                                        <text>一起送外卖吧</text>
+                                    </div>
+                                }} />
+                            </Card>}
+                            hide={() => <h2>账户禁止访问的内容</h2>}/>
+                        {/* <Authority auth='card' hoverable tag={Card} v-slots={{
                             cover: () => <img src={Img2} />
                         }}>
                             <Card.Meta title='_〆(´Д｀ )' v-slots={{
@@ -300,7 +312,7 @@ export default defineComponent(() => {
                                     <text>一起送外卖吧</text>
                                 </div>
                             }} />
-                        </Authority>
+                        </Authority> */}
                     </Col>
                 </Row>
             </Col>

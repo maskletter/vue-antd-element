@@ -19,7 +19,7 @@ export default defineComponent(() => {
         Modal.confirm({
             title: <div>
                 <WarningOutlined style={{marginRight: '15px', color: '#faad14'}} />
-                系统提示233
+                系统提示
             </div>,
             content: '确定退出系统吗',
             okText: '确定',
@@ -38,7 +38,7 @@ export default defineComponent(() => {
     const title: VNode = <Title 
         title={<>
             <h3 style={{color: '#fff', display: 'inline-block', marginRight: '15px'}}>vue3</h3>
-            <div style={{display: 'inline-block'}}><Breadcrumb /></div>
+            <div style={{display: 'inline-block', marginRight: '20px'}}><Breadcrumb /></div>
         </>} 
         right={<> 
             <Popover trigger='click' v-slots={{

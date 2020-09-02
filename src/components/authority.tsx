@@ -1,7 +1,7 @@
 import { defineComponent, createVNode, Events, HTMLAttributes } from "vue";
 
 import * as RuntimeCore from '@vue/runtime-core'
-import { Card } from 'ant-design-vue';
+import router from '@/router'
 import { useRoute, RouteLocationMatched } from 'vue-router';
 type StringKeyOf<T> = Extract<keyof T, string>
 type EventHandlers<E> = {
@@ -21,7 +21,8 @@ const Authority = defineComponent((
     props: ElementAttrs<HTMLAttributes&{[props: string]: any}&{
         /**权限 */
         auth: string,
-        tag?: any
+        show: () => RuntimeCore.VNode,
+        hide?: () => RuntimeCore.VNode,
     }>,
     content
 ) => {
@@ -29,26 +30,28 @@ const Authority = defineComponent((
     const route = useRoute();
     const itemRoute: RouteLocationMatched = route.matched[route.matched.length-1];
     /**
-     * 按钮权限是通过路由的meta里创建一个button数组来实现控制
+     * 按钮权限是通过路由的meta里创建一个page数组来实现控制
      */
-    const authButton: string[] = itemRoute.meta.button||[];
-    if(authButton.indexOf(props.auth) >= 0) {
-        return () => createVNode(props.tag as any, {
-            ...content.attrs,
-            ...content.slots
-        },[content.slots.default && content.slots.default()])    
+
+    
+    const authPage: string[] = itemRoute.meta.page||[];
+    if(authPage.indexOf(props.auth) >= 0 || router.isAuthorizeAll) {
+        return () => props.show();   
+    } else {
+        return () => props.hide ? props.hide() : null
     }
-    return ;
     
 
 })
 
 Authority.props = {
     auth: String,
+    show: Function,
+    hide: Function,
     tag: {
         type: [String, Object],
         default: 'div'
     }
-}
+} as any
 
 export default Authority;

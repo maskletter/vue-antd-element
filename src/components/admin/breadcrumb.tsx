@@ -1,7 +1,7 @@
 import { Breadcrumb } from 'ant-design-vue'
 import { defineComponent, watch, createVNode, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import systemRouter from '../../router'
+import systemRouter, { MainKey } from '../../router'
 import { makeStyles, createStyle } from '../theme'
 import { HomeFilled } from '@ant-design/icons-vue'
 
@@ -33,13 +33,13 @@ export default defineComponent(() => {
     })
     return () => <>
         <Breadcrumb>
-            <Breadcrumb.Item class={styles.item} onClick={() => clickItem('/main/home')}>
-                <HomeFilled />
-            </Breadcrumb.Item>
-            { route.matched.map((v, index) => v.name != 'main' ? <Breadcrumb.Item class={index == route.matched.length-1?styles.itemDisable:styles.item} onClick={() => clickItem(v.path)}>
+            
+            { route.matched.map((v, index) => v.name != MainKey ? <Breadcrumb.Item class={index == route.matched.length-1?styles.itemDisable:styles.item} onClick={() => clickItem(v.path)}>
                 { v.meta && v.meta.icon && createVNode(v.meta.icon, { style: { marginRight: '5px' } }) }
                 { v.meta ? v.meta.title : v.name }
-            </Breadcrumb.Item>: '' ) }
+            </Breadcrumb.Item>: <Breadcrumb.Item class={styles.item} onClick={() => clickItem('/main/home')}>
+                <HomeFilled />
+            </Breadcrumb.Item> ) }
         </Breadcrumb>
     </>
 

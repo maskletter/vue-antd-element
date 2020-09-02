@@ -21,13 +21,25 @@ const router = new class SystemRouter {
 
   public $router!: Router;
 
+  /**
+   * 通过授权注册的路由
+   */
   public registeredRouter: RouteRecordRaw[] = [];
 
-  private authRouter: RouteRecordRaw[] = [
+  /**
+   * 是否为全部授权
+   */
+  public isAuthorizeAll: boolean = false;
+
+  /**
+   * 授权控制的路由
+   * 此处的路由会被添加进左侧导航中
+   */
+  public authRouter: RouteRecordRaw[] = [
     {
       path: 'home',
       name: 'Home',
-      meta: { title: '首页', icon: HomeFilled, keepAlive: true, button: ['card'] },
+      meta: { title: '首页', icon: HomeFilled, keepAlive: true },
       component: () => import('../views/home')
     },
     {
@@ -153,6 +165,9 @@ const router = new class SystemRouter {
     },
   ]
 
+  /**
+   * 无需授权的路由页
+   */
   private defaultRouter: Array<RouteRecordRaw> = [
     {
       path: '/login',
@@ -171,29 +186,51 @@ const router = new class SystemRouter {
       name: MainKey,
       component: Main as any,
       children: [
-        // {
-        //   path: '',
-        //   redirect: './home'
-        // },
-        
-        // {
-        //   path: 'test/:id',
-        //   meta: { title: '路径传参', hidden: true },
-        //   name: 'test',
-        //   component: () => import('../views/About.vue')
-        // },
+       
       ]
     },
   ]
 
 
   public permissionComparison(auth: any[] | string) {
+
+    function eachAuthRouter(parent: any[], auth: any[] ) {
+      const routerList: any[] = [];
+      parent.forEach(v => {
+        const item = auth.find(j => j.path == v.path);
+        if(!item) return 
+        if(item.page) {
+          if(v.meta) {
+            v.meta.page = item.page
+          } else {
+            v.meta = { page: item.page }
+          }
+        }
+        const children = item.children && v.children ? eachAuthRouter(v.children, item.children) : []
+        if(children.length) {
+          children.push({
+            path: '',
+            redirect: './'+children[0].path
+          })
+        }
+        routerList.push({
+          ...v,
+          children: children
+        })
+      })
+      return routerList;
+    }
+
     if(typeof(auth) == 'string' && auth == '*') {
+      this.isAuthorizeAll = true
       this.authRouter.forEach(v => {
         this.addRoute(v);
       })
+    } else if(typeof(auth) == 'object'){
+      eachAuthRouter(this.authRouter, auth).forEach(v => {
+        this.addRoute(v);
+      })
     }
-    console.log(auth)
   }
 
   //检查路由格式
@@ -223,6 +260,9 @@ const router = new class SystemRouter {
     this.$router.removeRoute(name);
   }
 
+  /**
+   * 注册404跳转逻辑
+   */
   lostPage() {
     this.$router.beforeEach(async (to,form,next) => {
       if(to.matched.length == 0) {
@@ -235,7 +275,6 @@ const router = new class SystemRouter {
   }
 
   init() {
-    const _router: any = this.defaultRouter.find(v => v.name == MainKey)
     this.registeredRouter = reactive(this.defaultRouter) as RouteRecordRaw[];
     this.$router = createRouter({
       history: createWebHashHistory(process.env.BASE_URL),
@@ -245,30 +284,5 @@ const router = new class SystemRouter {
 
 }
 
-// const routes: Array<RouteRecordRaw> = [
-//   {
-//     path: '/',
-//     name: 'Home',
-//     meta: { title: '首页' },
-//     component: Home as any
-//   },
-//   {
-//     path: '/about',
-//     meta: { title: '关于' },
-//     name: 'About',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-//   },
-//   {
-//     path: '/test/:id',
-//     meta: { title: '路径传参' },
-//     name: 'test',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-//   }
-// ]
-
-// const router = createRouter({
-//   history: createWebHistory(process.env.BASE_URL),
-//   routes
-// })
 
 export default router

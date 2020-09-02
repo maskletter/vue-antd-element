@@ -16,7 +16,6 @@ app.config.globalProperties.$aa = () => {
     
 }
 router.$router.isReady().then(() => {
-    app.use(antd as any);
     app.mount('#app')
 })
 

@@ -46,7 +46,7 @@ const Drawer = defineComponent(() => {
         router.forEach(v => {
             if(v.meta && v.meta.hidden) return;
             if(v.redirect) return;
-            if(!v.children) {
+            if(!v.children || v.children.length == 0) {
                 dom.push(<Menu.Item key={path+v.path} onClick={() => routerLink(path+v.path, v.meta, v)}>
                     { v.meta && v.meta.icon && createVNode(v.meta.icon) }
                     <span>{ v.meta ? v.meta.title : v.name }</span>

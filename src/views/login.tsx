@@ -5,7 +5,8 @@ import { UserOutlined, EditFilled } from '@ant-design/icons-vue'
 import Br from '@/components/br'
 import { useRouter } from 'vue-router'
 import Headimg from '@/assets/headimg.jpg'
-
+import sysRouter from '@/router'
+import { account } from '@/mock/user'
 
 const useStyle = makeStyles((theme: any) => createStyle({
     '@global': {
@@ -81,6 +82,8 @@ export default defineComponent(() => {
                 username: form.name,
                 token:'dahwdhaw9d89a7d78a6d75a7wdawd'
             });
+            sysRouter.permissionComparison(account.getRoute(form.name).authority)
+            console.log(2321)
             router.push('/main/home')
         }, 1500)
     }
@@ -104,6 +107,10 @@ export default defineComponent(() => {
                 }} />
                 <Br height={60} />
                 <Button loading={loading.value} onClick={login} style={{width: '100%', height: '60px'}} type='danger'>登录</Button>
+            </div>
+            <div style={{color: 'white', textAlign: 'left', padding: '5px 20px'}}>
+                <p style={{marginBottom: '0px'}}>全部权限: admin , 密码随便写</p>
+                <p style={{marginBottom: '0px'}}>部分权限: admin1 , 密码随便写</p>
             </div>
         </div>
         

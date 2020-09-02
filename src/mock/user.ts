@@ -7,6 +7,7 @@ export const account = {
         authority: [
             {
                 path: 'home',
+                page: ['car1_$page','car2_$page'],
               },
               {
                 path: 'tabls',
@@ -17,12 +18,12 @@ export const account = {
                   {
                     path: 'copy',
                   },
-                  {
-                    path: 'container',
-                  },
-                  {
-                    path: 'dragula',
-                  },
+                  // {
+                  //   path: 'container',
+                  // },
+                  // {
+                  //   path: 'dragula',
+                  // },
                   {
                     path: 'crop',
                   },
@@ -49,10 +50,10 @@ export const account = {
                   },
                 ]
               },
-              {
-                path: 'routing-authority',
-                name: 'routing-authority',
-              },
+              // {
+              //   path: 'routing-authority',
+              //   name: 'routing-authority',
+              // },
               {
                 path: 'github',
               },

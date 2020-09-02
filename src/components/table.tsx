@@ -12,8 +12,9 @@ interface TableInterface {
     content?: () => VNode
     columns: any[]
     data: Data|any[]
-    rowKey?: string,
-    bordered?: boolean,
+    rowKey?: string
+    bordered?: boolean
+    filter?: any
 }
 
 const Table = defineComponent((props: TableInterface) => {

@@ -32,7 +32,6 @@ const useStyle = makeStyles(() => createStyle({
 
 export default defineComponent((props, content) => {
 
-    const styles = useStyle('app-style');
   
     const system: SystemProvide = inject<any>('system');
     const router = useRouter();
@@ -45,7 +44,9 @@ export default defineComponent((props, content) => {
         router.replace(route.path)
         console.log('注册用户信息成功')
     }).catch(() => {
-
+        sysRouter.lostPage();
+        console.log('用户未登录')
+        router.replace('/login')
     }).finally(() => {
         loadingLoginInfo.value = true
     })
@@ -57,14 +58,6 @@ export default defineComponent((props, content) => {
  
     return () => <ThemeProvide styles={style}>
         
-        {/* { loadingLoginInfo.value == false ? loginLoading : isLogin.value == false ? <Login></Login> : <App 
-            titleType='full'
-            title={title}
-            drawer={<Drawer />}
-            tabs={tabs}
-            color='#f6f6f6' >
-                <RouterView />
-        </App> } */}
         { loadingLoginInfo.value == false ? loginLoading :<RouterView /> }
 
         
